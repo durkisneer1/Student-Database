@@ -1,5 +1,4 @@
 #include <iostream>
-#include <cstdio>
 #include <fstream>
 #include <map>
 #include <string>
@@ -34,7 +33,7 @@ int main() {
 
     std::map<std::string, Student> studentMap;
     if (!assignNames(studentMap)) {
-        printf("Failed to open names file.\n");
+        std::cout << "Failed to open names file.\n";
         return 3;
     }
 
@@ -55,20 +54,20 @@ int main() {
         student.second.major = chosenMajor;
     }
 
-    printf("\nEnter 'close' to exit.");
+    std::cout << "\nEnter 'close' to exit.";
     std::string inputName;
     bool searching = true;
     while (searching) {
-        printf("\nEnter student name:");
+        std::cout << "\nEnter student name:";
         getline(std::cin, inputName);
         transform(inputName.begin(), inputName.end(), inputName.begin(), ::toupper);
         if (inputName == "CLOSE") {
             searching = false;
         } else if (studentMap.find(inputName) == studentMap.end()) {
-            printf("Student Not Found. Try again.\n");
+            std::cout << "Student Not Found. Try again.\n";
         } else {
             Student searchStudent = studentMap[inputName];
-            printf("Name: %s\nMajor: %s\n", searchStudent.name.c_str(), searchStudent.major.c_str());
+            std::cout << "Name: " << searchStudent.name << "\nMajor: " << searchStudent.major << "\n";
         }
     }
 
