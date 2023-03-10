@@ -4,7 +4,8 @@
 #include <string>
 #include <vector>
 #include <ctime>
-
+#include <algorithm>  
+#include <cstdlib>  
 
 struct Student {
     std::string name;
