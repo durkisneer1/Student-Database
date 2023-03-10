@@ -1,0 +1,76 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Course {
+public:
+    string name;
+    string day;
+    string time;
+};
+
+int main() {
+    // declare objects for each course
+    Course course1 = { "Calculus", "Monday", "10:00am" };
+    Course course2 = { "Linear Algebra", "Monday", "11:00am" };
+    Course course3 = { "Data Structures and Algorithms", "Monday", "12:00m" }; 
+    Course course4 = { "Discrete Mathematics", "Monday", "1:00pm" };
+    Course course5 = { "Statistics", "Monday", "2:00pm" };
+    Course course6 = { "Economics Structures and Algorithms", "Monday", "3:00pm" };
+    Course course7 = { "Marketing", "Tuesday", "10:00am" };
+    Course course8 = { "Financing", "Tuesday", "11:00am" };
+    Course course9 = { "Gastronomy", "Tuesday", "12:00pm" };
+    Course course10 = { "Nutrition", "Tuesday", "1:00pm" };
+    Course course11 = { "Sanitation and Safety", "Tuesday", "2:00pm" };
+    Course course12 = { "Anatomy", "Tuesday", "3:00pm" };
+    Course course13 = { "Biology", "Wednesday", "10:00am" };
+    Course course14 = { "Linear Algebra", "Wednesday", "11:00am" };
+    Course course15 = { "Physical Education", "Wednesday", "12:00pm" };
+    Course course16 = { "Ancient Philosophy", "Wednesday", "1:00pm" };
+    Course course17 = { "Ethics", "Wednesday", "2:00pm" };
+    Course course18 = { "Metaphysics", "Wednesday", "3:00pm" };
+    Course course19 = { "Epistemology", "Wednesday", "4:00pm" };
+    Course course20 = { "Administration", "Thursday", "10:00am" };
+    Course course21 = { "Eyewitness Testimony", "Thursday", "11:00am" };
+    Course course22 = { "Constituional Law", "Thursday", "12:00pm" };
+    Course course23 = { "Linear Algebra", "Thursday", "1:00pm" };
+    
+
+    // print table header
+    cout << "Class Schedule" << endl;
+    cout << "--------------" << endl;
+    cout << "Course\tDay\tTime" << endl;
+
+    // print each course's information
+    cout << course1.name << "\t" << course1.day << "\t" << course1.time << endl;
+    cout << course2.name << "\t" << course2.day << "\t" << course2.time << endl;
+    cout << course3.name << "\t" << course3.day << "\t" << course3.time << endl;
+    cout << course4.name << "\t" << course4.day << "\t" << course4.time << endl;
+    cout << course5.name << "\t" << course5.day << "\t" << course5.time << endl;
+    cout << course6.name << "\t" << course6.day << "\t" << course6.time << endl;
+    cout << course7.name << "\t" << course7.day << "\t" << course7.time << endl;
+    cout << course8.name << "\t" << course8.day << "\t" << course8.time << endl;
+    cout << course9.name << "\t" << course9.day << "\t" << course9.time << endl;
+    cout << course10.name << "\t" << course10.day << "\t" << course10.time << endl;
+    cout << course11.name << "\t" << course11.day << "\t" << course11.time << endl;
+    cout << course12.name << "\t" << course12.day << "\t" << course12.time << endl;
+    cout << course13.name << "\t" << course13.day << "\t" << course13.time << endl;
+    cout << course14.name << "\t" << course14.day << "\t" << course14.time << endl;
+    cout << course15.name << "\t" << course15.day << "\t" << course15.time << endl;
+    cout << course16.name << "\t" << course16.day << "\t" << course16.time << endl;
+    cout << course17.name << "\t" << course17.day << "\t" << course17.time << endl;
+    cout << course18.name << "\t" << course18.day << "\t" << course18.time << endl;
+    cout << course19.name << "\t" << course19.day << "\t" << course19.time << endl;
+    cout << course20.name << "\t" << course20.day << "\t" << course20.time << endl;
+    cout << course21.name << "\t" << course21.day << "\t" << course21.time << endl;
+    cout << course22.name << "\t" << course22.day << "\t" << course22.time << endl;
+    cout << course23.name << "\t" << course23.day << "\t" << course23.time << endl;
+    
+
+
+
+
+
+    return 0;
+}
