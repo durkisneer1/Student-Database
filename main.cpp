@@ -17,6 +17,12 @@ struct Student {
 };
 
 
+struct Vector2 {
+    int x;
+    int y;
+};
+
+
 bool assignNames(std::map<std::string, Student> &studentMap) {
     std::ifstream nameFile("../resources/names.txt");
     if (!nameFile.is_open()) {
@@ -100,6 +106,8 @@ int main(int argc, char *argv[]) {
     SDL_Window *window = SDL_CreateWindow("My App", 100, 100, WIN_WIDTH, WIN_HEIGHT, SDL_WINDOW_SHOWN);
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     SDL_Texture *image = LoadTexture("../resources/logic.png", renderer);
+    Vector2 pos = {WIN_WIDTH / 4, WIN_HEIGHT / 4};
+    SDL_Rect rect = {pos.x, pos.y, WIN_WIDTH / 2, WIN_HEIGHT / 2};
 
     bool run = true;
     SDL_Event ev;
@@ -109,8 +117,8 @@ int main(int argc, char *argv[]) {
                 run = false;
             }
         }
-        SDL_RenderClear(renderer) ;
-        SDL_RenderCopy(renderer, image, nullptr, nullptr);
+        SDL_RenderClear(renderer);
+        SDL_RenderCopy(renderer, image, nullptr, &rect);
         SDL_RenderPresent(renderer);
     }
 
