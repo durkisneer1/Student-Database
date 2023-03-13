@@ -52,6 +52,7 @@ build cmake_object_order_depends_target_Student_Database: phony || CMakeFiles/St
 build CMakeFiles/Student_Database.dir/main.cpp.obj: CXX_COMPILER__Student_Database_Debug F$:/Code/Student-Database/main.cpp || cmake_object_order_depends_target_Student_Database
   DEP_FILE = CMakeFiles\Student_Database.dir\main.cpp.obj.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu++23
+  INCLUDES = -IF:/Code/Student-Database/libs/SDL/include
   OBJECT_DIR = CMakeFiles\Student_Database.dir
   OBJECT_FILE_DIR = CMakeFiles\Student_Database.dir
 
@@ -65,7 +66,8 @@ build CMakeFiles/Student_Database.dir/main.cpp.obj: CXX_COMPILER__Student_Databa
 
 build Student_Database.exe: CXX_EXECUTABLE_LINKER__Student_Database_Debug CMakeFiles/Student_Database.dir/main.cpp.obj
   FLAGS = -g
-  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -lSDL2main  -lSDL2  -lSDL2_image  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_PATH = -LF:/Code/Student-Database/libs/SDL/lib
   OBJECT_DIR = CMakeFiles\Student_Database.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
