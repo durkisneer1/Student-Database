@@ -3,7 +3,7 @@
 #include "../include/RenderWindow.hpp"
 
 RenderWindow::RenderWindow(const char* title, int width, int height)
-: window(nullptr), renderer(nullptr) {
+: window(), renderer() {
     window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
     if (window == nullptr)
         std::cout << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
@@ -12,7 +12,7 @@ RenderWindow::RenderWindow(const char* title, int width, int height)
 }
 
 SDL_Texture* RenderWindow::loadTexture(const char* filePath) {
-    SDL_Texture* texture = nullptr;
+    SDL_Texture* texture;
     texture = IMG_LoadTexture(renderer, filePath);
     if (texture == nullptr)
         std::cout << "IMG_LoadTexture Error: " << SDL_GetError() << std::endl;
