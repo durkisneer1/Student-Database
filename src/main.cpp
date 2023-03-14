@@ -7,8 +7,10 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
-const int WIN_WIDTH = 800;
-const int WIN_HEIGHT = 600;
+#include "../include/RenderWindow.hpp"
+
+const float WIN_WIDTH = 800;
+const float WIN_HEIGHT = 600;
 
 
 struct Student {
@@ -17,14 +19,8 @@ struct Student {
 };
 
 
-struct Vector2 {
-    int x;
-    int y;
-};
-
-
 bool assignNames(std::map<std::string, Student> &studentMap) {
-    std::ifstream nameFile("../resources/names.txt");
+    std::ifstream nameFile("../res/names.txt");
     if (!nameFile.is_open()) {
         return false;
     }
@@ -84,47 +80,35 @@ void originalCode() {
 }
 
 
-SDL_Texture *LoadTexture(const std::string &file, SDL_Renderer *ren) {
-    SDL_Texture *texture = nullptr;
-    SDL_Surface *surface = IMG_Load(file.c_str());
-    if (surface == nullptr) {
-        std::cout << "LoadTexture Error: " << SDL_GetError() << std::endl;
-    } else {
-        texture = SDL_CreateTextureFromSurface(ren, surface);
-        if (texture == nullptr) {
-            std::cout << "CreateTextureFromSurface Error: " << SDL_GetError() << std::endl;
-        }
-    }
-    SDL_FreeSurface(surface);
-    return texture;
-}
+int main([[maybe_unused]] int argc, [[maybe_unused]] char *argv[]) {
+    if (SDL_Init(SDL_INIT_VIDEO))
+        std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
+    if (!IMG_Init(IMG_INIT_PNG))
+        std::cout << "IMG_Init Error: " << IMG_GetError() << std::endl;
+    RenderWindow window("My App", (int)WIN_WIDTH, (int)WIN_HEIGHT);
 
-
-int main(int argc, char *argv[]) {
-    SDL_Init(SDL_INIT_VIDEO);
-    IMG_Init(IMG_INIT_PNG);
-    SDL_Window *window = SDL_CreateWindow("My App", 100, 100, WIN_WIDTH, WIN_HEIGHT, SDL_WINDOW_SHOWN);
-    SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    SDL_Texture *image = LoadTexture("../resources/logic.png", renderer);
-    Vector2 pos = {WIN_WIDTH / 4, WIN_HEIGHT / 4};
-    SDL_Rect rect = {pos.x, pos.y, WIN_WIDTH / 2, WIN_HEIGHT / 2};
+    SDL_Texture* logicTexture = window.loadTexture("../res/logic.png");
+    Entity logicEntities[4] = {Entity(0, 0, logicTexture),
+                               Entity(300, 0, logicTexture),
+                               Entity(0, 300, logicTexture),
+                               Entity(300, 300, logicTexture)};
 
     bool run = true;
-    SDL_Event ev;
-    while(run) {
-        while(SDL_PollEvent(&ev) != 0) {
-            if(ev.type == SDL_QUIT) {
+    SDL_Event event;
+    while (run) {
+        while (SDL_PollEvent(&event) != 0) {
+            if (event.type == SDL_QUIT) {
                 run = false;
             }
         }
-        SDL_RenderClear(renderer);
-        SDL_RenderCopy(renderer, image, nullptr, &rect);
-        SDL_RenderPresent(renderer);
+        window.cls();
+        for (auto &logicEntity: logicEntities) {
+            window.draw(logicEntity);
+        }
+        window.flip();
     }
 
-    SDL_DestroyWindow(window);
-    SDL_DestroyTexture(image);
-    SDL_DestroyRenderer(renderer);
+    window.cleanUp();
     SDL_Quit();
 
     return 0;
