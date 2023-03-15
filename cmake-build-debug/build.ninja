@@ -70,6 +70,13 @@ build CMakeFiles/Student_Database.dir/src/entity.cpp.obj: CXX_COMPILER__Student_
   OBJECT_DIR = CMakeFiles\Student_Database.dir
   OBJECT_FILE_DIR = CMakeFiles\Student_Database.dir\src
 
+build CMakeFiles/Student_Database.dir/src/math.cpp.obj: CXX_COMPILER__Student_Database_Debug F$:/Code/Student-Database/src/math.cpp || cmake_object_order_depends_target_Student_Database
+  DEP_FILE = CMakeFiles\Student_Database.dir\src\math.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++23
+  INCLUDES = -IF:/Code/Student-Database/libs/SDL/include
+  OBJECT_DIR = CMakeFiles\Student_Database.dir
+  OBJECT_FILE_DIR = CMakeFiles\Student_Database.dir\src
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Student_Database
@@ -78,7 +85,7 @@ build CMakeFiles/Student_Database.dir/src/entity.cpp.obj: CXX_COMPILER__Student_
 #############################################
 # Link the executable Student_Database.exe
 
-build Student_Database.exe: CXX_EXECUTABLE_LINKER__Student_Database_Debug CMakeFiles/Student_Database.dir/src/main.cpp.obj CMakeFiles/Student_Database.dir/src/render_window.cpp.obj CMakeFiles/Student_Database.dir/src/entity.cpp.obj
+build Student_Database.exe: CXX_EXECUTABLE_LINKER__Student_Database_Debug CMakeFiles/Student_Database.dir/src/main.cpp.obj CMakeFiles/Student_Database.dir/src/render_window.cpp.obj CMakeFiles/Student_Database.dir/src/entity.cpp.obj CMakeFiles/Student_Database.dir/src/math.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lSDL2main  -lSDL2  -lSDL2_image  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   LINK_PATH = -LF:/Code/Student-Database/libs/SDL/lib

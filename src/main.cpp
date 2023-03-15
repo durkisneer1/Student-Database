@@ -1,3 +1,4 @@
+#include <cmath>
 #include <iostream>
 #include <fstream>
 #include <map>
@@ -80,31 +81,49 @@ void originalCode() {
 }
 
 
-int main([[maybe_unused]] int argc, [[maybe_unused]] char *argv[]) {
+int main(int argc, char *argv[]) {
     if (SDL_Init(SDL_INIT_VIDEO))
         std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
     if (!IMG_Init(IMG_INIT_PNG))
         std::cout << "IMG_Init Error: " << IMG_GetError() << std::endl;
-    RenderWindow window("My App", (int)WIN_WIDTH, (int)WIN_HEIGHT);
+    RenderWindow window("Student Database", (int)WIN_WIDTH, (int)WIN_HEIGHT);
 
-    SDL_Texture* logicTexture = window.loadTexture("../res/logic.png");
-    Entity logicEntities[4] = {Entity(0, 0, logicTexture),
-                               Entity(300, 0, logicTexture),
-                               Entity(0, 300, logicTexture),
-                               Entity(300, 300, logicTexture)};
+    EntityInfo wallpaperEntityInfo = window.loadEntityInfo("../res/wallpaper.png");
+    Entity wallpaperEntity(Vector2f(WIN_WIDTH / 2, WIN_HEIGHT / 2), wallpaperEntityInfo, 2);
+    EntityInfo buttonEntityInfo = window.loadEntityInfo("../res/button.png");
+    std::vector<Entity> buttonVector;
+    buttonVector.emplace_back(Vector2f(WIN_WIDTH / 4, WIN_HEIGHT / 2), buttonEntityInfo, 2);
+    buttonVector.emplace_back(Vector2f(WIN_WIDTH * 3/4, WIN_HEIGHT / 2), buttonEntityInfo, 2);
 
     bool run = true;
     SDL_Event event;
+    Uint64 lastTick = SDL_GetTicks64();
+    float frameRate = 60.0f;
     while (run) {
-        while (SDL_PollEvent(&event) != 0) {
+        while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
                 run = false;
             }
         }
-        window.cls();
-        for (auto &logicEntity: logicEntities) {
-            window.draw(logicEntity);
+        Sint64 delay, endTime = (Sint64)((1.0f / frameRate) * 1000.0f);
+        Uint64 rawPassedTicks = SDL_GetTicks64() - lastTick;
+        delay = endTime - (Sint64)rawPassedTicks;
+        if (delay < 0) {
+            delay = 0;
         }
+        SDL_Delay((Uint32)delay);
+
+        SDL_Point mousePos = window.getMousePos();
+
+        window.cls();
+        window.draw(wallpaperEntity);
+        for (Entity &buttonEntity : buttonVector) {
+            window.draw(buttonEntity);
+            if (buttonEntity.isColliding(mousePos)) {
+                std::cout << "hovering over button" << std::endl;
+            }
+        }
+
         window.flip();
     }
 

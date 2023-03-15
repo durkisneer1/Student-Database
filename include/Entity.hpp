@@ -2,16 +2,29 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
+#include "Math.hpp"
+
+
+struct EntityInfo {
+    SDL_Texture *texture;
+    int w, h;
+};
+
 
 class Entity {
 public:
-    Entity(float x, float y, SDL_Texture* texture);
-    [[nodiscard]] float getX() const;
-    [[nodiscard]] float getY() const;
-    SDL_Texture* getTexture();
-    SDL_Rect getCurrentFrame();
+    Entity(Vector2f pos, EntityInfo entityInfo, int scaleFactor);
+
+    Vector2f getPos() {
+        return pos;
+    }
+    SDL_Texture *getTexture();
+    SDL_Rect getSrcRect();
+    SDL_Rect getDstRect();
+    bool isColliding(SDL_Point mousePos);
 private:
-    float x, y;
-    SDL_Rect currentFrame;
-    SDL_Texture* texture;
+    Vector2f pos;
+    SDL_Rect srcRect;
+    SDL_Rect dstRect;
+    SDL_Texture *texture;
 };

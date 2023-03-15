@@ -1,26 +1,30 @@
+#include <tuple>
+
 #include "../include/Entity.hpp"
 
 
-Entity::Entity(float x, float y, SDL_Texture* texture)
-: x(x), y(y), texture(texture) {
-    currentFrame.x = 0;
-    currentFrame.y = 0;
-    currentFrame.w = 1200;
-    currentFrame.h = 1200;
-}
-
-float Entity::getX() const {
-    return x;
-}
-
-float Entity::getY() const {
-    return y;
+Entity::Entity(Vector2f pos, EntityInfo entityInfo, int scaleFactor)
+: pos(pos), texture(entityInfo.texture), srcRect{0, 0, entityInfo.w, entityInfo.h} {
+    float new_x = getPos().x - (float)(srcRect.w * scaleFactor) / 2;
+    float new_y = getPos().y - (float)(srcRect.h * scaleFactor) / 2;
+    dstRect.x = (int)new_x;
+    dstRect.y = (int)new_y;
+    dstRect.w = srcRect.w * scaleFactor;
+    dstRect.h = srcRect.h * scaleFactor;
 }
 
 SDL_Texture* Entity::getTexture() {
     return texture;
 }
 
-SDL_Rect Entity::getCurrentFrame() {
-    return currentFrame;
+SDL_Rect Entity::getSrcRect() {
+    return srcRect;
+}
+
+SDL_Rect Entity::getDstRect() {
+    return dstRect;
+}
+
+bool Entity::isColliding(SDL_Point mousePos) {
+    return SDL_PointInRect(&mousePos, &dstRect);
 }

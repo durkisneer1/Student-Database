@@ -1,8 +1,10 @@
 #include <iostream>
+#include <vector>
 
 #include "../include/RenderWindow.hpp"
 
-RenderWindow::RenderWindow(const char* title, int width, int height)
+
+RenderWindow::RenderWindow(const char *title, int width, int height)
 : window(), renderer() {
     window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
     if (window == nullptr)
@@ -11,12 +13,21 @@ RenderWindow::RenderWindow(const char* title, int width, int height)
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 }
 
-SDL_Texture* RenderWindow::loadTexture(const char* filePath) {
-    SDL_Texture* texture;
+EntityInfo RenderWindow::loadEntityInfo(const char* filePath) {
+    SDL_Texture *texture;
+    int w, h;
     texture = IMG_LoadTexture(renderer, filePath);
     if (texture == nullptr)
         std::cout << "IMG_LoadTexture Error: " << SDL_GetError() << std::endl;
-    return texture;
+
+    SDL_QueryTexture(texture, nullptr, nullptr, &w, &h);
+    return EntityInfo{texture, w, h};
+}
+
+SDL_Point RenderWindow::getMousePos() {
+    int x, y;
+    SDL_GetMouseState(&x, &y);
+    return {x, y};
 }
 
 void RenderWindow::cleanUp() {
@@ -28,18 +39,9 @@ void RenderWindow::cls() {
     SDL_RenderClear(renderer);
 }
 
-void RenderWindow::draw(Entity& entity) {
-    SDL_Rect srcRect;
-    srcRect.x = entity.getCurrentFrame().x;
-    srcRect.y = entity.getCurrentFrame().y;
-    srcRect.w = entity.getCurrentFrame().w;
-    srcRect.h = entity.getCurrentFrame().h;
-
-    SDL_Rect dstRect;
-    dstRect.x = (int)entity.getX();
-    dstRect.y = (int)entity.getY();
-    dstRect.w = srcRect.w / 4;
-    dstRect.h = srcRect.h / 4;
+void RenderWindow::draw(Entity &entity) {
+    SDL_Rect srcRect = entity.getSrcRect();
+    SDL_Rect dstRect = entity.getDstRect();
     SDL_RenderCopy(renderer, entity.getTexture(), &srcRect, &dstRect);
 }
 
