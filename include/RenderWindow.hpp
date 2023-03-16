@@ -1,7 +1,6 @@
 #pragma once
 #include <SDL.h>
 #include <SDL_image.h>
-#include <tuple>
 
 #include "Entity.hpp"
 
@@ -12,10 +11,10 @@ public:
     EntityInfo loadEntityInfo(const char *filePath);
 
     void cleanUp();
-    SDL_Point getMousePos();
-    void cls();
+    void getMousePos(int &x, int &y) { SDL_GetMouseState(&x, &y); };
+    void cls() { SDL_RenderClear(renderer); };
     void draw(Entity& entity);
-    void flip();
+    void flip() { SDL_RenderPresent(renderer); };
 private:
     SDL_Window *window;
     SDL_Renderer *renderer;

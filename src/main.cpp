@@ -7,6 +7,7 @@
 #include <ctime>
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 
 #include "../include/RenderWindow.hpp"
 
@@ -86,10 +87,17 @@ int main(int argc, char *argv[]) {
         std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
     if (!IMG_Init(IMG_INIT_PNG))
         std::cout << "IMG_Init Error: " << IMG_GetError() << std::endl;
+    if (TTF_Init() < 0)
+        std::cout << "TTF_Init Error: " << TTF_GetError() << std::endl;
     RenderWindow window("Student Database", (int)WIN_WIDTH, (int)WIN_HEIGHT);
+
+    TTF_Font *font = TTF_OpenFont("../res/fonts/VCR_OSD_Mono.ttf", 24);
+    if (!font)
+        std::cout << "TTF_OpenFont Error: " << TTF_GetError() << std::endl;
 
     EntityInfo wallpaperEntityInfo = window.loadEntityInfo("../res/wallpaper.png");
     Entity wallpaperEntity(Vector2f(WIN_WIDTH / 2, WIN_HEIGHT / 2), wallpaperEntityInfo, 2);
+
     EntityInfo buttonEntityInfo = window.loadEntityInfo("../res/button.png");
     std::vector<Entity> buttonVector;
     buttonVector.emplace_back(Vector2f(WIN_WIDTH / 4, WIN_HEIGHT / 2), buttonEntityInfo, 2);
@@ -97,38 +105,30 @@ int main(int argc, char *argv[]) {
 
     bool run = true;
     SDL_Event event;
-    Uint64 lastTick = SDL_GetTicks64();
-    float frameRate = 60.0f;
+    SDL_Point mousePos = {0, 0};
     while (run) {
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
                 run = false;
             }
         }
-        Sint64 delay, endTime = (Sint64)((1.0f / frameRate) * 1000.0f);
-        Uint64 rawPassedTicks = SDL_GetTicks64() - lastTick;
-        delay = endTime - (Sint64)rawPassedTicks;
-        if (delay < 0) {
-            delay = 0;
-        }
-        SDL_Delay((Uint32)delay);
-
-        SDL_Point mousePos = window.getMousePos();
+        window.getMousePos(mousePos.x, mousePos.y);
 
         window.cls();
         window.draw(wallpaperEntity);
         for (Entity &buttonEntity : buttonVector) {
+            buttonEntity.update(mousePos);
             window.draw(buttonEntity);
-            if (buttonEntity.isColliding(mousePos)) {
-                std::cout << "hovering over button" << std::endl;
-            }
         }
 
         window.flip();
+        SDL_Delay(16);
     }
 
     window.cleanUp();
     SDL_Quit();
+    IMG_Quit();
+    TTF_Quit();
 
     return 0;
 }

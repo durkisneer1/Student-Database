@@ -87,7 +87,7 @@ build CMakeFiles/Student_Database.dir/src/math.cpp.obj: CXX_COMPILER__Student_Da
 
 build Student_Database.exe: CXX_EXECUTABLE_LINKER__Student_Database_Debug CMakeFiles/Student_Database.dir/src/main.cpp.obj CMakeFiles/Student_Database.dir/src/render_window.cpp.obj CMakeFiles/Student_Database.dir/src/entity.cpp.obj CMakeFiles/Student_Database.dir/src/math.cpp.obj
   FLAGS = -g
-  LINK_LIBRARIES = -lSDL2main  -lSDL2  -lSDL2_image  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -lSDL2main  -lSDL2  -lSDL2_image  -lSDL2_ttf  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   LINK_PATH = -LF:/Code/Student-Database/libs/SDL/lib
   OBJECT_DIR = CMakeFiles\Student_Database.dir
   POST_BUILD = cd .

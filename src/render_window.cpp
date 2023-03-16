@@ -24,27 +24,13 @@ EntityInfo RenderWindow::loadEntityInfo(const char* filePath) {
     return EntityInfo{texture, w, h};
 }
 
-SDL_Point RenderWindow::getMousePos() {
-    int x, y;
-    SDL_GetMouseState(&x, &y);
-    return {x, y};
-}
-
 void RenderWindow::cleanUp() {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
-}
-
-void RenderWindow::cls() {
-    SDL_RenderClear(renderer);
 }
 
 void RenderWindow::draw(Entity &entity) {
     SDL_Rect srcRect = entity.getSrcRect();
     SDL_Rect dstRect = entity.getDstRect();
     SDL_RenderCopy(renderer, entity.getTexture(), &srcRect, &dstRect);
-}
-
-void RenderWindow::flip() {
-    SDL_RenderPresent(renderer);
 }
