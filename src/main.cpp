@@ -112,7 +112,7 @@ int main(int argc, char *argv[]) {
                 run = false;
             }
         }
-        window.getMousePos(mousePos.x, mousePos.y);
+        RenderWindow::getMousePos(mousePos.x, mousePos.y);
 
         window.cls();
         window.draw(wallpaperEntity);

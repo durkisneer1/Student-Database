@@ -67,3 +67,6 @@
 4	1169	7006401220000000	CMakeFiles/Student_Database.dir/src/render_window.cpp.obj	94fa03ccbf8393bc
 10	1698	7006401220000000	CMakeFiles/Student_Database.dir/src/main.cpp.obj	59936e98c5eea60f
 1698	1930	7006401220000000	Student_Database.exe	45dbbdd1e85d38e8
+10	1096	7006421400000000	CMakeFiles/Student_Database.dir/src/render_window.cpp.obj	94fa03ccbf8393bc
+4	1648	7006421420000000	CMakeFiles/Student_Database.dir/src/main.cpp.obj	59936e98c5eea60f
+1648	1891	7006421420000000	Student_Database.exe	45dbbdd1e85d38e8

@@ -6,7 +6,10 @@
 
 RenderWindow::RenderWindow(const char *title, int width, int height)
 : window(), renderer() {
-    window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow(title,
+                              SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                              width, height,
+                              SDL_WINDOW_SHOWN);
     if (window == nullptr)
         std::cout << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
 
