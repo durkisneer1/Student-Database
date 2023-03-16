@@ -7,21 +7,21 @@ Entity::Entity(Vector2f pos, EntityInfo entityInfo, int scaleFactor)
 }
 
 void Entity::setDstRect() {
-    dstRect.w = srcRect.w * scaleFactor;
-    dstRect.h = srcRect.h * scaleFactor;
+    dstRect.w = (float)(srcRect.w * scaleFactor);
+    dstRect.h = (float)(srcRect.h * scaleFactor);
     float center_x = getPos().x - (float)(dstRect.w) / 2;
     float center_y = getPos().y - (float)(dstRect.h) / 2;
     idlePos = {center_x, center_y};
     hoveredPos = {center_x, center_y + 10};
-    dstRect.x = (int)center_x;
-    dstRect.y = (int)center_y;
+    dstRect.x = center_x;
+    dstRect.y = center_y;
 };
 
-void Entity::update(SDL_Point mousePos) {
-    if (SDL_PointInRect(&mousePos, &dstRect)) {
+void Entity::update(SDL_FPoint mousePos) {
+    if (SDL_PointInFRect(&mousePos, &dstRect)) {
         currentPos = hoveredPos;
     } else {
         currentPos = idlePos;
     }
-    dstRect.y = (int)currentPos.y;
+    dstRect.y = currentPos.y;
 }

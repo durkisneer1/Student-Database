@@ -32,8 +32,32 @@ void RenderWindow::cleanUp() {
     SDL_DestroyWindow(window);
 }
 
+SDL_FPoint RenderWindow::getMousePos() {
+    int x, y;
+    SDL_GetMouseState(&x, &y);
+    return {(float)x, (float)y};
+}
+
 void RenderWindow::draw(Entity &entity) {
     SDL_Rect srcRect = entity.getSrcRect();
-    SDL_Rect dstRect = entity.getDstRect();
-    SDL_RenderCopy(renderer, entity.getTexture(), &srcRect, &dstRect);
+    SDL_FRect dstRect = entity.getDstRect();
+    SDL_RenderCopyF(renderer, entity.getTexture(), &srcRect, &dstRect);
+}
+
+void RenderWindow::scroll(Entity &entity) {
+    SDL_Rect srcRect = entity.getSrcRect();
+    SDL_FRect dstRect = entity.getDstRect();
+    for (int i = -1; i < 1; i++) {
+        dstRect.x = (float)i * dstRect.w + entity.xOffset;
+        for (int j = -1; j < 1; j++) {
+            dstRect.y = (float)j * dstRect.h + entity.yOffset;
+            SDL_RenderCopyF(renderer, entity.getTexture(), &srcRect, &dstRect);
+        }
+    }
+    entity.xOffset += 0.5;
+    entity.yOffset += 0.5;
+    if (entity.xOffset > dstRect.w)
+        entity.xOffset = 0;
+    if (entity.yOffset > dstRect.h)
+        entity.yOffset = 0;
 }

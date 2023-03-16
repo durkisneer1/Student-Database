@@ -20,14 +20,16 @@ public:
     SDL_Texture *getTexture() { return texture; };
     SDL_Rect getSrcRect() { return srcRect; };
     void setDstRect();
-    SDL_Rect getDstRect() { return dstRect; };
-    void update(SDL_Point mousePos);
+    SDL_FRect getDstRect() { return dstRect; };
+    void update(SDL_FPoint mousePos);
+    float xOffset = 0;
+    float yOffset = 0;
 private:
     Vector2f idlePos;
     Vector2f hoveredPos;
     Vector2f currentPos;
     SDL_Rect srcRect;
-    SDL_Rect dstRect;
+    SDL_FRect dstRect;
     SDL_Texture *texture;
     int scaleFactor;
 };

@@ -11,10 +11,11 @@ public:
     EntityInfo loadEntityInfo(const char *filePath);
 
     void cleanUp();
-    static void getMousePos(int &x, int &y) { SDL_GetMouseState(&x, &y); };
+    static SDL_FPoint getMousePos();
     void cls() { SDL_RenderClear(renderer); };
     void draw(Entity& entity);
     void flip() { SDL_RenderPresent(renderer); };
+    void scroll(Entity& entity);
 private:
     SDL_Window *window;
     SDL_Renderer *renderer;

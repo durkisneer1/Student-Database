@@ -11,8 +11,8 @@
 
 #include "../include/RenderWindow.hpp"
 
-const float WIN_WIDTH = 800;
-const float WIN_HEIGHT = 600;
+const float WIN_WIDTH = 880;
+const float WIN_HEIGHT = 640;
 
 
 struct Student {
@@ -100,22 +100,22 @@ int main(int argc, char *argv[]) {
 
     EntityInfo buttonEntityInfo = window.loadEntityInfo("../res/button.png");
     std::vector<Entity> buttonVector;
-    buttonVector.emplace_back(Vector2f(WIN_WIDTH / 4, WIN_HEIGHT / 2), buttonEntityInfo, 2);
-    buttonVector.emplace_back(Vector2f(WIN_WIDTH * 3/4, WIN_HEIGHT / 2), buttonEntityInfo, 2);
+    buttonVector.emplace_back(Vector2f(WIN_WIDTH / 4, WIN_HEIGHT * 2/3), buttonEntityInfo, 2);
+    buttonVector.emplace_back(Vector2f(WIN_WIDTH * 3/4, WIN_HEIGHT * 2/3), buttonEntityInfo, 2);
 
     bool run = true;
     SDL_Event event;
-    SDL_Point mousePos = {0, 0};
+    SDL_FPoint mousePos;
     while (run) {
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
                 run = false;
             }
         }
-        RenderWindow::getMousePos(mousePos.x, mousePos.y);
+        mousePos = RenderWindow::getMousePos();
 
         window.cls();
-        window.draw(wallpaperEntity);
+        window.scroll(wallpaperEntity);
         for (Entity &buttonEntity : buttonVector) {
             buttonEntity.update(mousePos);
             window.draw(buttonEntity);
