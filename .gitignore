@@ -30,8 +30,3 @@
 *.exe
 *.out
 *.app
-
-# Other files
-*.ninja_deps
-*.ninja_log
-*.log
