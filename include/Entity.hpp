@@ -18,7 +18,6 @@ class Entity {
 public:
     Entity(Vector2f pos, EntityInfo entityInfo, float scaleFactor);
 
-    Vector2f getPos() { return currentPos; };
     SDL_Texture *getTexture() { return texture; };
     SDL_Rect getSrcRect() { return srcRect; };
     void centerDstRect();

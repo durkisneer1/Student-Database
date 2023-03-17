@@ -17,9 +17,10 @@ public:
     void cleanUp();
     static SDL_FPoint getMousePos();
     void cls() { SDL_RenderClear(renderer); };
-    void draw(Entity& entity);
+    void drawStatic(Entity& entity);
     void flip() { SDL_RenderPresent(renderer); };
     void scroll(Entity& entity);
+    void drawBounceText(Text& text, float amplitude, float frequency);
 private:
     SDL_Window *window;
     SDL_Renderer *renderer;

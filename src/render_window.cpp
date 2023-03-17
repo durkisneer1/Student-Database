@@ -54,7 +54,7 @@ SDL_FPoint RenderWindow::getMousePos() {
     return {(float)x, (float)y};
 }
 
-void RenderWindow::draw(Entity &entity) {
+void RenderWindow::drawStatic(Entity &entity) {
     SDL_Rect srcRect = entity.getSrcRect();
     SDL_FRect dstRect = entity.getDstRect();
     SDL_RenderCopyF(renderer, entity.getTexture(), &srcRect, &dstRect);
@@ -76,4 +76,11 @@ void RenderWindow::scroll(Entity &entity) {
         entity.xOffset = 0;
     if (entity.yOffset > dstRect.h)
         entity.yOffset = 0;
+}
+
+void RenderWindow::drawBounceText(Text &text, float amplitude, float frequency) {
+    SDL_Rect srcRect = text.getSrcRect();
+    SDL_FRect dstRect = text.getDstRect();
+    text.waveVertical(amplitude, frequency);
+    SDL_RenderCopyF(renderer, text.getTexture(), &srcRect, &dstRect);
 }

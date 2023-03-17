@@ -13,9 +13,5 @@ struct Vector2f {
     : x(x), y(y)
     {}
 
-    float waveVertical(float amplitude, float theta) {
-        return amplitude * sinf(theta) + y;
-    }
-
     float x, y;
 };

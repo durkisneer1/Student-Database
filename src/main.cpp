@@ -95,38 +95,55 @@ int main(int argc, char *argv[]) {
     if (!font)
         std::cout << "TTF_OpenFont Error: " << TTF_GetError() << std::endl;
 
-    EntityInfo titleInfoArray[2] = {window.loadTextInfo("Student Database", font, {0, 43, 54}),
-                                    window.loadTextInfo("Student Database", font, {238, 232, 213})};
-    Text titleEntityArray[2] = {Text(Vector2f(WIN_WIDTH / 2 + 5, WIN_HEIGHT / 3 + 5), titleInfoArray[0], 2),
-                                Text(Vector2f(WIN_WIDTH / 2, WIN_HEIGHT / 3), titleInfoArray[1], 2)};
+    std::string titleText = "Student Portal";
+    EntityInfo titleTextInfoArray[2] = {window.loadTextInfo(titleText, font, {0, 43, 54}),
+                                        window.loadTextInfo(titleText, font, {238, 232, 213})};
+    Text titleTextEntityArray[2] = {Text(Vector2f(WIN_WIDTH / 2 + 4, WIN_HEIGHT / 4 + 4), titleTextInfoArray[0], 2),
+                                    Text(Vector2f(WIN_WIDTH / 2, WIN_HEIGHT / 4), titleTextInfoArray[1], 2)};
 
     EntityInfo wallpaperImageInfo = window.loadImageInfo("../res/wallpaper.png");
     Entity wallpaperEntity(Vector2f(WIN_WIDTH / 2, WIN_HEIGHT / 2), wallpaperImageInfo, 2);
 
     EntityInfo buttonImageInfo = window.loadImageInfo("../res/button.png");
-    std::vector<Button> buttonVector;
-    buttonVector.emplace_back(Vector2f(WIN_WIDTH / 4, WIN_HEIGHT * 2/3), buttonImageInfo, 2);
-    buttonVector.emplace_back(Vector2f(WIN_WIDTH * 3/4, WIN_HEIGHT * 2/3), buttonImageInfo, 2);
+    EntityInfo buttonTextInfoArray[2] = {window.loadTextInfo("Log In", font, {0, 43, 54}),
+                                         window.loadTextInfo("Sign In", font, {0, 43, 54})};
+    Button buttonTextEntityArray[2] = {Button(Vector2f(), buttonTextInfoArray[0], 1.2),
+                                       Button(Vector2f(), buttonTextInfoArray[1], 1.2)};
+
+    std::vector<Button> buttonImageVector;
+    buttonImageVector.emplace_back(Vector2f(WIN_WIDTH / 4, WIN_HEIGHT * 2/3), buttonImageInfo, 2);
+    buttonImageVector.emplace_back(Vector2f(WIN_WIDTH * 3/4, WIN_HEIGHT * 2/3), buttonImageInfo, 2);
 
     bool run = true;
     SDL_Event event;
     SDL_FPoint mousePos;
     while (run) {
-        while (SDL_PollEvent(&event)) {
+        while (SDL_PollEvent(&event) != 0) {
             if (event.type == SDL_QUIT) {
                 run = false;
+            } else if (event.type == SDL_MOUSEBUTTONDOWN && event.button.state == SDL_BUTTON_LEFT) {
+                for (Button &button : buttonImageVector) {
+                    SDL_FPoint p = {(float)event.button.x, (float)event.button.y};
+                    if (button.isClicked(p)) {
+                        std::cout << "Button Clicked" << std::endl;
+                    }
+                }
             }
         }
         mousePos = RenderWindow::getMousePos();
 
         window.cls();
         window.scroll(wallpaperEntity);
-        for (Text &titleEntity : titleEntityArray) {
-            window.draw(titleEntity);
+        for (Text &titleEntity : titleTextEntityArray) {
+            window.drawBounceText(titleEntity, 20.0f, 5.0f);
         }
-        for (Button &buttonEntity : buttonVector) {
-            buttonEntity.animateHover(mousePos);
-            window.draw(buttonEntity);
+        for (int i = 0; i < 2; i++) {
+            Button currButton = buttonImageVector[i];
+            currButton.animateHover(mousePos);
+            window.drawStatic(currButton);
+
+            buttonTextEntityArray[i].setPos(currButton.getPos(), currButton.getDstRect());
+            window.drawStatic(buttonTextEntityArray[i]);
         }
 
         window.flip();
