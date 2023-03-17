@@ -91,17 +91,22 @@ int main(int argc, char *argv[]) {
         std::cout << "TTF_Init Error: " << TTF_GetError() << std::endl;
     RenderWindow window("Student Database", (int)WIN_WIDTH, (int)WIN_HEIGHT);
 
-    TTF_Font *font = TTF_OpenFont("../res/fonts/VCR_OSD_Mono.ttf", 24);
+    TTF_Font *font = TTF_OpenFont("../res/fonts/Daydream.ttf", 21);
     if (!font)
         std::cout << "TTF_OpenFont Error: " << TTF_GetError() << std::endl;
 
-    EntityInfo wallpaperEntityInfo = window.loadEntityInfo("../res/wallpaper.png");
-    Entity wallpaperEntity(Vector2f(WIN_WIDTH / 2, WIN_HEIGHT / 2), wallpaperEntityInfo, 2);
+    EntityInfo titleInfoArray[2] = {window.loadTextInfo("Student Database", font, {0, 43, 54}),
+                                    window.loadTextInfo("Student Database", font, {238, 232, 213})};
+    Text titleEntityArray[2] = {Text(Vector2f(WIN_WIDTH / 2 + 5, WIN_HEIGHT / 3 + 5), titleInfoArray[0], 2),
+                                Text(Vector2f(WIN_WIDTH / 2, WIN_HEIGHT / 3), titleInfoArray[1], 2)};
 
-    EntityInfo buttonEntityInfo = window.loadEntityInfo("../res/button.png");
-    std::vector<Entity> buttonVector;
-    buttonVector.emplace_back(Vector2f(WIN_WIDTH / 4, WIN_HEIGHT * 2/3), buttonEntityInfo, 2);
-    buttonVector.emplace_back(Vector2f(WIN_WIDTH * 3/4, WIN_HEIGHT * 2/3), buttonEntityInfo, 2);
+    EntityInfo wallpaperImageInfo = window.loadImageInfo("../res/wallpaper.png");
+    Entity wallpaperEntity(Vector2f(WIN_WIDTH / 2, WIN_HEIGHT / 2), wallpaperImageInfo, 2);
+
+    EntityInfo buttonImageInfo = window.loadImageInfo("../res/button.png");
+    std::vector<Button> buttonVector;
+    buttonVector.emplace_back(Vector2f(WIN_WIDTH / 4, WIN_HEIGHT * 2/3), buttonImageInfo, 2);
+    buttonVector.emplace_back(Vector2f(WIN_WIDTH * 3/4, WIN_HEIGHT * 2/3), buttonImageInfo, 2);
 
     bool run = true;
     SDL_Event event;
@@ -116,8 +121,11 @@ int main(int argc, char *argv[]) {
 
         window.cls();
         window.scroll(wallpaperEntity);
-        for (Entity &buttonEntity : buttonVector) {
-            buttonEntity.update(mousePos);
+        for (Text &titleEntity : titleEntityArray) {
+            window.draw(titleEntity);
+        }
+        for (Button &buttonEntity : buttonVector) {
+            buttonEntity.animateHover(mousePos);
             window.draw(buttonEntity);
         }
 
@@ -128,6 +136,7 @@ int main(int argc, char *argv[]) {
     window.cleanUp();
     SDL_Quit();
     IMG_Quit();
+    TTF_CloseFont(font);
     TTF_Quit();
 
     return 0;

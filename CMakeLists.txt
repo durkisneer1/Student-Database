@@ -17,6 +17,6 @@ add_executable(
         src/entity.cpp
         include/Math.hpp
         src/math.cpp
-)
+        include/Button.hpp src/button.cpp include/Text.hpp src/text.cpp)
 
 target_link_libraries(${PROJECT_NAME} SDL2main SDL2 SDL2_image SDL2_ttf)

@@ -1,4 +1,6 @@
 #pragma once
+
+#include <string>
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
@@ -14,22 +16,19 @@ struct EntityInfo {
 
 class Entity {
 public:
-    Entity(Vector2f pos, EntityInfo entityInfo, int scaleFactor);
+    Entity(Vector2f pos, EntityInfo entityInfo, float scaleFactor);
 
     Vector2f getPos() { return currentPos; };
     SDL_Texture *getTexture() { return texture; };
     SDL_Rect getSrcRect() { return srcRect; };
-    void setDstRect();
+    void centerDstRect();
     SDL_FRect getDstRect() { return dstRect; };
-    void update(SDL_FPoint mousePos);
     float xOffset = 0;
     float yOffset = 0;
-private:
-    Vector2f idlePos;
-    Vector2f hoveredPos;
+protected:
     Vector2f currentPos;
     SDL_Rect srcRect;
-    SDL_FRect dstRect;
+    SDL_FRect dstRect = {0, 0, 0, 0};
     SDL_Texture *texture;
-    int scaleFactor;
+    float scaleFactor;
 };

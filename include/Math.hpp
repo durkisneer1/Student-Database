@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <cmath>
 
 
 struct Vector2f {
@@ -12,18 +13,9 @@ struct Vector2f {
     : x(x), y(y)
     {}
 
+    float waveVertical(float amplitude, float theta) {
+        return amplitude * sinf(theta) + y;
+    }
+
     float x, y;
-};
-
-
-struct Vector2i {
-    Vector2i()
-    : x(0), y(0)
-    {}
-
-    Vector2i(int x, int y)
-    : x(x), y(y)
-    {}
-
-    int x, y;
 };
