@@ -125,8 +125,11 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
             } else if (event.type == SDL_MOUSEBUTTONDOWN && event.button.state == SDL_BUTTON_LEFT) {
                 for (Button &button : buttonImageVector) {
                     SDL_FPoint p = {(float)event.button.x, (float)event.button.y};
-                    if (button.isClicked(p)) {
-                        std::cout << "Button Clicked" << std::endl;
+                    if (button.isHovered(p) && !button.clicked) {
+                        button.clicked = true;
+                        for (Text &titleEntity : titleTextEntityArray) {
+                            titleEntity.hide = true;
+                        }
                     }
                 }
             }
@@ -137,16 +140,29 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
 
         wallpaperEntity.drawScroll(globalRenderer, 0.5f, 0.5f);
         for (Text &titleEntity : titleTextEntityArray) {
-            titleEntity.waveVertical(globalRenderer, 20.0f, 5.0f);
+            if (!titleEntity.hide) {
+                titleEntity.animateWave(globalRenderer, 20.0f, 5.0f, false, true);
+            } else {
+                titleEntity.animateHide(0);
+                titleEntity.drawStatic(globalRenderer);
+            }
         }
-        for (int i = 0; i < 2; i++) {
-            Button currButton = buttonImageVector[i];
-            currButton.animateHover(mousePos);
+        for (int i = 0; i < buttonImageVector.size(); i++) {
+            Button &currButton = buttonImageVector[i];
+            if (currButton.clicked) {
+                for (Button &allButtons : buttonImageVector) {
+                    allButtons.clicked = true;
+                }
+                currButton.animateHide(WIN_HEIGHT);
+            } else {
+                currButton.animateHover(mousePos);
+            }
             currButton.drawStatic(globalRenderer);
 
             buttonTextEntityArray[i].setPos(currButton.getPos(), currButton.getDstRect());
             buttonTextEntityArray[i].drawStatic(globalRenderer);
         }
+
 
         window.flip();
         SDL_Delay(16);

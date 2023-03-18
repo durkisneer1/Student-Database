@@ -16,3 +16,12 @@ void Button::setPos(Vector2f pos, SDL_FRect rectReference) {
     dstRect.x = pos.x + rectReference.w / 2 - dstRect.w / 2;
     dstRect.y = pos.y + rectReference.h / 2 - dstRect.h / 2;
 }
+
+void Button::animateHide(float maxHeight) {
+    if (currentPos.y >= maxHeight + dstRect.h / 2) {
+        return;
+    }
+    currentPos.y += powf(1.1, exponent);
+    exponent += 1.2;
+    dstRect.y = currentPos.y;
+}

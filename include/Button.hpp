@@ -7,11 +7,16 @@
 class Button : public Entity {
 public:
     Button(Vector2f pos, EntityInfo entityInfo, float scaleFactor);
+
     void animateHover(SDL_FPoint mousePos);
+    void animateHide(float maxHeight);
     Vector2f getPos() { return {dstRect.x, dstRect.y}; }
     void setPos(Vector2f pos, SDL_FRect rectReference);
-    bool isClicked(SDL_FPoint mousePos) { return SDL_PointInFRect(&mousePos, &dstRect); }
+    bool isHovered(SDL_FPoint mousePos) { return SDL_PointInFRect(&mousePos, &dstRect); }
+
+    bool clicked = false;
 private:
     Vector2f idlePos = currentPos;
     Vector2f hoveredPos = {currentPos.x, currentPos.y + 10};
+    float exponent = 0;
 };
