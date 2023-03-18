@@ -152,7 +152,7 @@ extern "C" {
  *  The prototype for the application's main() function
  */
 typedef int (*SDL_main_func)(int argc, char *argv[]);
-extern SDLMAIN_DECLSPEC int SDL_main([[maybe_unused]] int argc, [[maybe_unused]] char *argv[]);
+extern SDLMAIN_DECLSPEC int SDL_main([[maybe_unused]] [[maybe_unused]] int argc, [[maybe_unused]] [[maybe_unused]] char *argv[]);
 
 
 /**

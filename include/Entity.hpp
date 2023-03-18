@@ -18,16 +18,16 @@ class Entity {
 public:
     Entity(Vector2f pos, EntityInfo entityInfo, float scaleFactor);
 
-    SDL_Texture *getTexture() { return texture; };
-    SDL_Rect getSrcRect() { return srcRect; };
     void centerDstRect();
     SDL_FRect getDstRect() { return dstRect; };
-    float xOffset = 0;
-    float yOffset = 0;
+    void drawStatic(SDL_Renderer *renderer) { SDL_RenderCopyF(renderer, texture, &srcRect, &dstRect); };
+    void drawScroll(SDL_Renderer *renderer, float xSpeed, float ySpeed);
 protected:
     Vector2f currentPos;
     SDL_Rect srcRect;
     SDL_FRect dstRect = {0, 0, 0, 0};
     SDL_Texture *texture;
     float scaleFactor;
+    float xOffset = 0;
+    float yOffset = 0;
 };

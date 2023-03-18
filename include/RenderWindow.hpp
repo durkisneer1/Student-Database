@@ -15,12 +15,10 @@ public:
     EntityInfo loadTextInfo(const std::string &text, TTF_Font *font, SDL_Color color);
 
     void cleanUp();
-    static SDL_FPoint getMousePos();
     void cls() { SDL_RenderClear(renderer); };
-    void drawStatic(Entity& entity);
     void flip() { SDL_RenderPresent(renderer); };
-    void scroll(Entity& entity);
-    void drawBounceText(Text& text, float amplitude, float frequency);
+    SDL_Renderer *getRenderer() { return renderer; };
+    static SDL_FPoint getMousePos();
 private:
     SDL_Window *window;
     SDL_Renderer *renderer;

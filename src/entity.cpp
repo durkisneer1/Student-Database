@@ -13,3 +13,19 @@ void Entity::centerDstRect() {
     dstRect.x = currentPos.x;
     dstRect.y = currentPos.y;
 };
+
+void Entity::drawScroll(SDL_Renderer *renderer, float xSpeed, float ySpeed) {
+    for (int i = -1; i < 2; i++) {
+        dstRect.x = (float)i * dstRect.w + xOffset;
+        for (int j = -1; j < 2; j++) {
+            dstRect.y = (float)j * dstRect.h + yOffset;
+            SDL_RenderCopyF(renderer, texture, &srcRect, &dstRect);
+        }
+    }
+    xOffset += xSpeed;
+    yOffset += ySpeed;
+    if (xOffset > dstRect.w)
+        xOffset = 0;
+    if (yOffset > dstRect.h)
+        yOffset = 0;
+}

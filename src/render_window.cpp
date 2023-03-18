@@ -53,34 +53,3 @@ SDL_FPoint RenderWindow::getMousePos() {
     SDL_GetMouseState(&x, &y);
     return {(float)x, (float)y};
 }
-
-void RenderWindow::drawStatic(Entity &entity) {
-    SDL_Rect srcRect = entity.getSrcRect();
-    SDL_FRect dstRect = entity.getDstRect();
-    SDL_RenderCopyF(renderer, entity.getTexture(), &srcRect, &dstRect);
-}
-
-void RenderWindow::scroll(Entity &entity) {
-    SDL_Rect srcRect = entity.getSrcRect();
-    SDL_FRect dstRect = entity.getDstRect();
-    for (int i = -1; i < 1; i++) {
-        dstRect.x = (float)i * dstRect.w + entity.xOffset;
-        for (int j = -1; j < 1; j++) {
-            dstRect.y = (float)j * dstRect.h + entity.yOffset;
-            SDL_RenderCopyF(renderer, entity.getTexture(), &srcRect, &dstRect);
-        }
-    }
-    entity.xOffset += 0.5;
-    entity.yOffset += 0.5;
-    if (entity.xOffset > dstRect.w)
-        entity.xOffset = 0;
-    if (entity.yOffset > dstRect.h)
-        entity.yOffset = 0;
-}
-
-void RenderWindow::drawBounceText(Text &text, float amplitude, float frequency) {
-    SDL_Rect srcRect = text.getSrcRect();
-    SDL_FRect dstRect = text.getDstRect();
-    text.waveVertical(amplitude, frequency);
-    SDL_RenderCopyF(renderer, text.getTexture(), &srcRect, &dstRect);
-}

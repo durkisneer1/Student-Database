@@ -82,7 +82,7 @@ void originalCode() {
 }
 
 
-int main(int argc, char *argv[]) {
+int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
     if (SDL_Init(SDL_INIT_VIDEO))
         std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
     if (!IMG_Init(IMG_INIT_PNG))
@@ -90,6 +90,7 @@ int main(int argc, char *argv[]) {
     if (TTF_Init() < 0)
         std::cout << "TTF_Init Error: " << TTF_GetError() << std::endl;
     RenderWindow window("Student Database", (int)WIN_WIDTH, (int)WIN_HEIGHT);
+    SDL_Renderer *globalRenderer = window.getRenderer();
 
     TTF_Font *font = TTF_OpenFont("../res/fonts/Daydream.ttf", 21);
     if (!font)
@@ -106,7 +107,7 @@ int main(int argc, char *argv[]) {
 
     EntityInfo buttonImageInfo = window.loadImageInfo("../res/button.png");
     EntityInfo buttonTextInfoArray[2] = {window.loadTextInfo("Log In", font, {0, 43, 54}),
-                                         window.loadTextInfo("Sign In", font, {0, 43, 54})};
+                                         window.loadTextInfo("Sign Up", font, {0, 43, 54})};
     Button buttonTextEntityArray[2] = {Button(Vector2f(), buttonTextInfoArray[0], 1.2),
                                        Button(Vector2f(), buttonTextInfoArray[1], 1.2)};
 
@@ -133,17 +134,18 @@ int main(int argc, char *argv[]) {
         mousePos = RenderWindow::getMousePos();
 
         window.cls();
-        window.scroll(wallpaperEntity);
+
+        wallpaperEntity.drawScroll(globalRenderer, 0.5f, 0.5f);
         for (Text &titleEntity : titleTextEntityArray) {
-            window.drawBounceText(titleEntity, 20.0f, 5.0f);
+            titleEntity.waveVertical(globalRenderer, 20.0f, 5.0f);
         }
         for (int i = 0; i < 2; i++) {
             Button currButton = buttonImageVector[i];
             currButton.animateHover(mousePos);
-            window.drawStatic(currButton);
+            currButton.drawStatic(globalRenderer);
 
             buttonTextEntityArray[i].setPos(currButton.getPos(), currButton.getDstRect());
-            window.drawStatic(buttonTextEntityArray[i]);
+            buttonTextEntityArray[i].drawStatic(globalRenderer);
         }
 
         window.flip();
