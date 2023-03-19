@@ -89,18 +89,14 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
         std::cout << "IMG_Init Error: " << IMG_GetError() << std::endl;
     if (TTF_Init() < 0)
         std::cout << "TTF_Init Error: " << TTF_GetError() << std::endl;
-    RenderWindow window("Student Database", (int)WIN_WIDTH, (int)WIN_HEIGHT);
+    RenderWindow window("Student Database", (int) WIN_WIDTH, (int) WIN_HEIGHT);
     SDL_Renderer *globalRenderer = window.getRenderer();
 
     TTF_Font *font = TTF_OpenFont("../res/fonts/Daydream.ttf", 21);
     if (!font)
         std::cout << "TTF_OpenFont Error: " << TTF_GetError() << std::endl;
 
-    std::string titleText = "Student Portal";
-    EntityInfo titleTextInfoArray[2] = {window.loadTextInfo(titleText, font, {0, 43, 54}),
-                                        window.loadTextInfo(titleText, font, {238, 232, 213})};
-    Text titleTextEntityArray[2] = {Text(Vector2f(WIN_WIDTH / 2 + 4, WIN_HEIGHT / 4 + 4), titleTextInfoArray[0], 2),
-                                    Text(Vector2f(WIN_WIDTH / 2, WIN_HEIGHT / 4), titleTextInfoArray[1], 2)};
+    Text titleText(Vector2f(WIN_WIDTH / 2 + 4, WIN_HEIGHT / 4 + 4), font, 2, globalRenderer, "Student Portal");
 
     EntityInfo wallpaperImageInfo = window.loadImageInfo("../res/wallpaper.png");
     Entity wallpaperEntity(Vector2f(WIN_WIDTH / 2, WIN_HEIGHT / 2), wallpaperImageInfo, 2);
@@ -112,8 +108,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
                                        Button(Vector2f(), buttonTextInfoArray[1], 1.2)};
 
     std::vector<Button> buttonImageVector;
-    buttonImageVector.emplace_back(Vector2f(WIN_WIDTH / 4, WIN_HEIGHT * 2/3), buttonImageInfo, 2);
-    buttonImageVector.emplace_back(Vector2f(WIN_WIDTH * 3/4, WIN_HEIGHT * 2/3), buttonImageInfo, 2);
+    buttonImageVector.emplace_back(Vector2f(WIN_WIDTH / 4, WIN_HEIGHT * 2 / 3), buttonImageInfo, 2);
+    buttonImageVector.emplace_back(Vector2f(WIN_WIDTH * 3 / 4, WIN_HEIGHT * 2 / 3), buttonImageInfo, 2);
 
     bool run = true;
     SDL_Event event;
@@ -122,14 +118,26 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
         while (SDL_PollEvent(&event) != 0) {
             if (event.type == SDL_QUIT) {
                 run = false;
-            } else if (event.type == SDL_MOUSEBUTTONDOWN && event.button.state == SDL_BUTTON_LEFT) {
-                for (Button &button : buttonImageVector) {
-                    SDL_FPoint p = {(float)event.button.x, (float)event.button.y};
-                    if (button.isHovered(p) && !button.clicked) {
-                        button.clicked = true;
-                        for (Text &titleEntity : titleTextEntityArray) {
-                            titleEntity.hide = true;
+            }
+            for (Button &button: buttonImageVector) {
+                if (event.type == SDL_MOUSEBUTTONDOWN && event.button.state == SDL_BUTTON_LEFT) {
+                    SDL_FPoint p = {(float) event.button.x, (float) event.button.y};
+                    if (button.isHovered(p) && !button.clicked && !titleText.hidden) {
+                        for (Button &allButtons: buttonImageVector) {
+                            allButtons.resetExponent();
+                            allButtons.clicked = true;
                         }
+                        titleText.resetExponent();
+                        titleText.hide = true;
+                    }
+                } else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE && button.clicked) {
+                    if (button.clicked && titleText.hidden) {
+                        for (Button &allButtons: buttonImageVector) {
+                            allButtons.resetExponent();
+                            allButtons.clicked = false;
+                        }
+                        titleText.resetExponent();
+                        titleText.hide = false;
                     }
                 }
             }
@@ -139,30 +147,30 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
         window.cls();
 
         wallpaperEntity.drawScroll(globalRenderer, 0.5f, 0.5f);
-        for (Text &titleEntity : titleTextEntityArray) {
-            if (!titleEntity.hide) {
-                titleEntity.animateWave(globalRenderer, 20.0f, 5.0f, false, true);
-            } else {
-                titleEntity.animateHide(0);
-                titleEntity.drawStatic(globalRenderer);
+        if (titleText.hide) {
+            titleText.animateHide();
+        } else {
+            titleText.animateShow();
+            if (!titleText.hidden) {
+                titleText.animateWave(20.0f, 5.0f, false, true);
             }
         }
+        titleText.draw(globalRenderer);
         for (int i = 0; i < buttonImageVector.size(); i++) {
             Button &currButton = buttonImageVector[i];
             if (currButton.clicked) {
-                for (Button &allButtons : buttonImageVector) {
-                    allButtons.clicked = true;
-                }
                 currButton.animateHide(WIN_HEIGHT);
             } else {
-                currButton.animateHover(mousePos);
+                currButton.animateShow();
+                if (!currButton.hidden) {
+                    currButton.animateHover(mousePos);
+                }
             }
             currButton.drawStatic(globalRenderer);
 
             buttonTextEntityArray[i].setPos(currButton.getPos(), currButton.getDstRect());
             buttonTextEntityArray[i].drawStatic(globalRenderer);
         }
-
 
         window.flip();
         SDL_Delay(16);

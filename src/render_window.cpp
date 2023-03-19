@@ -43,6 +43,12 @@ EntityInfo RenderWindow::loadTextInfo(const std::string &text, TTF_Font *font, S
     return EntityInfo{texture, w, h};
 }
 
+EntityInfo RenderWindow::loadTextureInfo(SDL_Texture *srcTexture) {
+    int w, h;
+    SDL_QueryTexture(srcTexture, nullptr, nullptr, &w, &h);
+    return {srcTexture, w, h};
+}
+
 void RenderWindow::cleanUp() {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);

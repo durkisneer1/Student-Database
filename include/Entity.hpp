@@ -17,8 +17,8 @@ struct EntityInfo {
 class Entity {
 public:
     Entity(Vector2f pos, EntityInfo entityInfo, float scaleFactor);
-
     void centerDstRect();
+
     SDL_FRect getDstRect() { return dstRect; };
     void drawStatic(SDL_Renderer *renderer) { SDL_RenderCopyF(renderer, texture, &srcRect, &dstRect); };
     void drawScroll(SDL_Renderer *renderer, float xSpeed, float ySpeed);
