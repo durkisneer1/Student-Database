@@ -46,22 +46,15 @@ void originalCode() {
         return;
     }
 
-    std::vector<std::string> majorList = {"Computer Science", "Business", "Culinary", "Nursing", "Philosophy",
-                                          "Criminal Justice"};
     std::map<std::string, std::vector<std::string>> courseList;
 
     // Courses for one semester
-    courseList[majorList[0]] = {"Calculus", "Linear Algebra", "Data Structures and Algorithms", "Discrete Mathematics"};
-    courseList[majorList[1]] = {"Statistics", "Economics", "Marketing", "Financing"};
-    courseList[majorList[2]] = {"Gastronomy", "Nutrition", "Marketing", "Sanitation and Safety"};
-    courseList[majorList[3]] = {"Anatomy", "Biology", "Physical Education", "Statistics"};
-    courseList[majorList[4]] = {"Ancient Philosophy", "Ethics", "Metaphysics", "Epistemology"};
-    courseList[majorList[5]] = {"Administration", "Ethics", "Eyewitness Testimony", "Constitutional Law"};
-    for (auto &student: studentMap) {
-        int randomIndex = rand() % courseList.size();
-        std::string chosenMajor = majorList[randomIndex];
-        student.second.major = chosenMajor;
-    }
+    courseList["Computer Science"] = {"Calculus", "Linear Algebra", "Data Structures and Algorithms", "Discrete Mathematics"};
+    courseList["Business"] = {"Statistics", "Economics", "Marketing", "Financing"};
+    courseList["Culinary"] = {"Gastronomy", "Nutrition", "Marketing", "Sanitation and Safety"};
+    courseList["Nursing"] = {"Anatomy", "Biology", "Physical Education", "Statistics"};
+    courseList["Philosophy"] = {"Ancient Philosophy", "Ethics", "Metaphysics", "Epistemology"};
+    courseList["Criminal Justice"] = {"Administration", "Ethics", "Eyewitness Testimony", "Constitutional Law"};
 
     std::cout << "\nEnter 'close' to exit.";
     std::string inputName;
@@ -102,14 +95,19 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
     Entity wallpaperEntity(Vector2f(WIN_WIDTH / 2, WIN_HEIGHT / 2), wallpaperImageInfo, 2);
 
     EntityInfo buttonImageInfo = window.loadImageInfo("../res/button.png");
-    EntityInfo buttonTextInfoArray[2] = {window.loadTextInfo("Log In", font, {0, 43, 54}),
-                                         window.loadTextInfo("Sign Up", font, {0, 43, 54})};
-    Button buttonTextEntityArray[2] = {Button(Vector2f(), buttonTextInfoArray[0], 1.2),
-                                       Button(Vector2f(), buttonTextInfoArray[1], 1.2)};
+    std::vector<Button> buttonImageVector = {
+            Button(Vector2f(WIN_WIDTH / 4, WIN_HEIGHT * 2 / 3), buttonImageInfo, 2),
+            Button(Vector2f(WIN_WIDTH * 3 / 4, WIN_HEIGHT * 2 / 3), buttonImageInfo, 2)
+    };
 
-    std::vector<Button> buttonImageVector;
-    buttonImageVector.emplace_back(Vector2f(WIN_WIDTH / 4, WIN_HEIGHT * 2 / 3), buttonImageInfo, 2);
-    buttonImageVector.emplace_back(Vector2f(WIN_WIDTH * 3 / 4, WIN_HEIGHT * 2 / 3), buttonImageInfo, 2);
+    EntityInfo buttonTextInfoArray[2] = {
+            window.loadTextInfo("Log In", font, {0, 43, 54}),
+            window.loadTextInfo("Sign Up", font, {0, 43, 54})
+    };
+    Button buttonTextEntityArray[2] = {
+            Button(Vector2f(), buttonTextInfoArray[0], 1.2),
+            Button(Vector2f(), buttonTextInfoArray[1], 1.2)
+    };
 
     bool run = true;
     SDL_Event event;
@@ -133,11 +131,10 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
                 } else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE && button.clicked) {
                     if (button.clicked && titleText.hidden) {
                         for (Button &allButtons: buttonImageVector) {
-                            allButtons.resetExponent();
                             allButtons.clicked = false;
                         }
-                        titleText.resetExponent();
                         titleText.hide = false;
+                        titleText.resetTheta();
                     }
                 }
             }
@@ -147,14 +144,9 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
         window.cls();
 
         wallpaperEntity.drawScroll(globalRenderer, 0.5f, 0.5f);
-        if (titleText.hide) {
-            titleText.animateHide();
-        } else {
-            titleText.animateShow();
-            if (!titleText.hidden) {
-                titleText.animateWave(20.0f, 5.0f, false, true);
-            }
-        }
+        titleText.hide ? titleText.animateHide() : titleText.animateShow();
+        if (!titleText.hidden)
+            titleText.animateWave(20.0f, 5.0f, false, true);
         titleText.draw(globalRenderer);
         for (int i = 0; i < buttonImageVector.size(); i++) {
             Button &currButton = buttonImageVector[i];
@@ -162,9 +154,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
                 currButton.animateHide(WIN_HEIGHT);
             } else {
                 currButton.animateShow();
-                if (!currButton.hidden) {
+                if (!currButton.hidden)
                     currButton.animateHover(mousePos);
-                }
             }
             currButton.drawStatic(globalRenderer);
 

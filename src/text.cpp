@@ -30,9 +30,9 @@ void Text::animateHide() {
         hidden = true;
         return;
     }
-    currentPos.y -= powf(1.1, exponent);
-    exponent += 1.2;
-    dstRect.y -= powf(1.1, exponent);
+    currentPos.y -= powf(2, exponent);
+    dstRect.y = currentPos.y;
+    exponent += 0.2;
 }
 
 void Text::animateShow() {
@@ -40,9 +40,9 @@ void Text::animateShow() {
         hidden = false;
         return;
     }
-    currentPos.y += powf(1.1, exponent);
-    exponent += 1.2;
-    dstRect.y += powf(1.1, exponent);
+    currentPos.y += powf(2, exponent);
+    dstRect.y = currentPos.y;
+    exponent -= 0.2;
 }
 
 void Text::generateText(SDL_Renderer *renderer, TTF_Font *font, const std::string &text) {

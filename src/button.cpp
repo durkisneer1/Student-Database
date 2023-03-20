@@ -18,22 +18,22 @@ void Button::setPos(Vector2f pos, SDL_FRect rectReference) {
 }
 
 void Button::animateHide(float maxHeight) {
-    if (currentPos.y >= maxHeight + dstRect.h / 2) {
+    if (currentPos.y >= maxHeight) {
         hidden = true;
         return;
     }
-    currentPos.y += powf(1.1, exponent);
-    exponent += 1.2;
+    currentPos.y += powf(2, exponent);
     dstRect.y = currentPos.y;
+    exponent += 0.2;
 }
 
 void Button::animateShow() {
-    if (currentPos.y <= originalPos.y + dstRect.h / 4) {
+    if (currentPos.y <= originalPos.y) {
         clicked = false;
         hidden = false;
         return;
     }
-    currentPos.y -= powf(1.1, exponent);
-    exponent += 1.2;
+    currentPos.y -= powf(2, exponent);
     dstRect.y = currentPos.y;
+    exponent -= 0.2;
 }

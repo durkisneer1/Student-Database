@@ -4,8 +4,7 @@
 #include "../include/RenderWindow.hpp"
 
 
-RenderWindow::RenderWindow(const std::string &title, int width, int height)
-: window(), renderer() {
+RenderWindow::RenderWindow(const std::string &title, int width, int height) {
     window = SDL_CreateWindow(title.c_str(),
                               SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                               width, height,
@@ -41,12 +40,6 @@ EntityInfo RenderWindow::loadTextInfo(const std::string &text, TTF_Font *font, S
     SDL_QueryTexture(texture, nullptr, nullptr, &w, &h);
     SDL_FreeSurface(surface);
     return EntityInfo{texture, w, h};
-}
-
-EntityInfo RenderWindow::loadTextureInfo(SDL_Texture *srcTexture) {
-    int w, h;
-    SDL_QueryTexture(srcTexture, nullptr, nullptr, &w, &h);
-    return {srcTexture, w, h};
 }
 
 void RenderWindow::cleanUp() {

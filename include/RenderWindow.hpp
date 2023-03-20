@@ -13,7 +13,6 @@ public:
     RenderWindow(const std::string &title, int width, int height);
     EntityInfo loadImageInfo(const std::string &filePath);
     EntityInfo loadTextInfo(const std::string &text, TTF_Font *font, SDL_Color color);
-    static EntityInfo loadTextureInfo(SDL_Texture *srcTexture);
 
     void cleanUp();
     void cls() { SDL_RenderClear(renderer); };
