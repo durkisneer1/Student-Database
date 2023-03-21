@@ -13,10 +13,14 @@ add_executable(
         src/main.cpp
         include/RenderWindow.hpp
         src/render_window.cpp
-        include/Entity.hpp
-        src/entity.cpp
+        include/Wallpaper.hpp
+        src/wallpaper.cpp
         include/Math.hpp
         src/math.cpp
-        include/Button.hpp src/button.cpp include/Text.hpp src/text.cpp)
+        include/Button.hpp
+        src/button.cpp
+        include/Text.hpp
+        src/text.cpp
+        include/Utils.hpp)
 
 target_link_libraries(${PROJECT_NAME} SDL2main SDL2 SDL2_image SDL2_ttf)

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Entity.hpp"
+#include "Utils.hpp"
 
 
 class Text {

@@ -1,9 +1,6 @@
 #pragma once
 
-#include <SDL.h>
-#include <SDL_image.h>
-
-#include "Entity.hpp"
+#include "Wallpaper.hpp"
 #include "Text.hpp"
 #include "Button.hpp"
 

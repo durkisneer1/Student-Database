@@ -1,7 +1,19 @@
 #include "../include/Button.hpp"
 
 Button::Button(Vector2f pos, EntityInfo entityInfo, float scaleFactor)
-: Entity(pos, entityInfo, scaleFactor) {}
+: currentPos(pos), texture(entityInfo.texture), srcRect{0, 0, entityInfo.w, entityInfo.h}, scaleFactor(scaleFactor) {
+    centerDstRect();
+    idlePos = currentPos;
+    hoveredPos = {idlePos.x, idlePos.y + 10};
+}
+
+void Button::centerDstRect() {
+    dstRect.w = (float)srcRect.w * scaleFactor;
+    dstRect.h = (float)srcRect.h * scaleFactor;
+    currentPos = {currentPos.x - dstRect.w / 2, currentPos.y - dstRect.h / 2};
+    dstRect.x = currentPos.x;
+    dstRect.y = currentPos.y;
+}
 
 void Button::animateHover(SDL_FPoint mousePos) {
     if (clickable) {
