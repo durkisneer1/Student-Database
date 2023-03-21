@@ -1,0 +1,22 @@
+{
+  "courses": [
+    {
+      "course_degree": "Computer Science",
+      "course_title": "Calculas",
+      "schedule": {
+        "day": "Monday",
+        "start_time": "10:00AM",
+        "end_time": "11:30 AM"
+      }
+    },
+    {
+      "course_degree": "Computer Science",
+      "course_title": "Linear Algebra",
+      "schedule": {
+        "day": "Monday",
+        "start_time": "12:00 PM",
+        "end_time": "1:30 PM"
+      }
+    }
+  ]
+}
