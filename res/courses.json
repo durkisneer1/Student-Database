@@ -1,50 +1,38 @@
 {
-  "Computer Science": [
-    {
-      "Calculus": 3,
+  "Computer Science": {
+      "Calculus": ["8:00am", 3],
       "Linear Algebra": 3,
       "Data Structures and Algorithms": 2,
       "Discrete Mathematics": 3
-    }
-  ],
-  "Business": [
-    {
+  },
+  "Business": {
       "Statistics": 3,
       "Economics": 2,
       "Marketing": 2,
       "Financing": 2
-    }
-  ],
-  "Culinary": [
-    {
+  },
+  "Culinary": {
       "Gastronomy": 3,
       "Nutrition": 2,
       "Marketing": 3,
       "Sanitation and Safety": 1
-    }
-  ],
-  "Nursing": [
-    {
+  },
+  "Nursing": {
       "Anatomy": 3,
       "Biology": 3,
       "Physical Education": 1,
       "Statistics": 2
-    }
-  ],
-  "Philosophy": [
-    {
+  },
+  "Philosophy": {
       "Ancient Philosophy": 2,
       "Ethics": 2,
       "Metaphysics": 2,
       "Epistemology": 2
-    }
-  ],
-  "Criminal Justice": [
-    {
+  },
+  "Criminal Justice": {
       "Administration": 2,
       "Ethics": 2,
       "Eyewitness Testimony": 3,
       "Constitutional Law": 3
-    }
-  ]
+  }
 }
