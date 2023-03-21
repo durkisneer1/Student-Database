@@ -26,7 +26,7 @@ void Text::animateWave(float amplitude, float frequency, bool x, bool y) {
 }
 
 void Text::animateHide() {
-    if (currentPos.y <= -dstRect.h) {
+    if (currentPos.y < -dstRect.h) {
         hidden = true;
         return;
     }
@@ -36,18 +36,17 @@ void Text::animateHide() {
 }
 
 void Text::animateShow() {
-    if (currentPos.y >= originalPos.y - dstRect.h / 2) {
-        hidden = false;
+    if (currentPos.y > originalPos.y - dstRect.h / 2)
         return;
-    }
+    hidden = false;
     currentPos.y += powf(2, exponent);
     dstRect.y = currentPos.y;
     exponent -= 0.2;
 }
 
 void Text::generateText(SDL_Renderer *renderer, TTF_Font *font, const std::string &text) {
-    SDL_Surface *shadowSurface = TTF_RenderText_Solid(font, text.c_str(), {0, 43, 54});
-    SDL_Surface *textSurface = TTF_RenderText_Solid(font, text.c_str(), {238, 232, 213});
+    SDL_Surface *shadowSurface = TTF_RenderText_Solid(font, text.c_str(), {7, 54, 66});
+    SDL_Surface *textSurface = TTF_RenderText_Solid(font, text.c_str(), {253, 246, 227});
     SDL_Surface *dstSurface = SDL_CreateRGBSurface(0, shadowSurface->w + 2, shadowSurface->h + 2, 32,
                                                      0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
     SDL_Rect textRect = {2, 2, shadowSurface->w, shadowSurface->h};

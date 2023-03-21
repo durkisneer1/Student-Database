@@ -20,8 +20,8 @@ public:
     void centerDstRect();
 
     SDL_FRect getDstRect() { return dstRect; };
-    void drawStatic(SDL_Renderer *renderer) { SDL_RenderCopyF(renderer, texture, &srcRect, &dstRect); };
-    void drawScroll(SDL_Renderer *renderer, float xSpeed, float ySpeed);
+    void draw(SDL_Renderer *renderer) { SDL_RenderCopyF(renderer, texture, &srcRect, &dstRect); };
+    void animateScroll(SDL_Renderer *renderer, float xSpeed, float ySpeed);
 protected:
     Vector2f currentPos;
     SDL_Rect srcRect;

@@ -13,8 +13,9 @@ public:
     void animateHide();
     void animateShow();
     void draw(SDL_Renderer *renderer) { SDL_RenderCopyF(renderer, texture, &srcRect, &dstRect); };
+
     void resetExponent() { exponent = 0; }
-    void resetTheta() { theta = 0; }
+
     bool hide = false;
     bool hidden = false;
 private:

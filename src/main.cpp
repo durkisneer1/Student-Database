@@ -15,62 +15,23 @@ const float WIN_WIDTH = 880;
 const float WIN_HEIGHT = 640;
 
 
-struct Student {
-    std::string name;
-    std::string major;
-};
-
-
-bool assignNames(std::map<std::string, Student> &studentMap) {
-    std::ifstream nameFile("../res/names.txt");
-    if (!nameFile.is_open()) {
-        return false;
+void hideObjects(std::vector<Button> &buttonVector, Button &currButton, Text &titleText, SDL_FPoint mousePos) {
+    if (currButton.isHovered(mousePos) && !currButton.hidden && !titleText.hidden) {
+        for (Button &allButtons: buttonVector) {
+            allButtons.resetExponent();
+            allButtons.hide = true;
+        }
+        titleText.resetExponent();
+        titleText.hide = true;
     }
-    std::string name;
-    while (getline(nameFile, name)) {
-        Student newStudent;
-        newStudent.name = name;
-        studentMap[name] = newStudent;
-    }
-    nameFile.close();
-    return true;
 }
 
 
-void originalCode() {
-    srand(time(nullptr));
-
-    std::map<std::string, Student> studentMap;
-    if (!assignNames(studentMap)) {
-        std::cout << "Failed to open names file.\n";
-        return;
-    }
-
-    std::map<std::string, std::vector<std::string>> courseList;
-
-    // Courses for one semester
-    courseList["Computer Science"] = {"Calculus", "Linear Algebra", "Data Structures and Algorithms", "Discrete Mathematics"};
-    courseList["Business"] = {"Statistics", "Economics", "Marketing", "Financing"};
-    courseList["Culinary"] = {"Gastronomy", "Nutrition", "Marketing", "Sanitation and Safety"};
-    courseList["Nursing"] = {"Anatomy", "Biology", "Physical Education", "Statistics"};
-    courseList["Philosophy"] = {"Ancient Philosophy", "Ethics", "Metaphysics", "Epistemology"};
-    courseList["Criminal Justice"] = {"Administration", "Ethics", "Eyewitness Testimony", "Constitutional Law"};
-
-    std::cout << "\nEnter 'close' to exit.";
-    std::string inputName;
-    bool searching = true;
-    while (searching) {
-        std::cout << "\nEnter student name:";
-        getline(std::cin, inputName);
-        transform(inputName.begin(), inputName.end(), inputName.begin(), ::toupper);
-        if (inputName == "CLOSE") {
-            searching = false;
-        } else if (studentMap.find(inputName) == studentMap.end()) {
-            std::cout << "Student Not Found. Try again.\n";
-        } else {
-            Student searchStudent = studentMap[inputName];
-            std::cout << "Name: " << searchStudent.name << "\nMajor: " << searchStudent.major << "\n";
-        }
+void showObjects(std::vector<Button> &buttonVector, Button &currButton, Text &titleText) {
+    if (currButton.hidden && titleText.hidden) {
+        for (Button &allButtons: buttonVector)
+            allButtons.hide = false;
+        titleText.hide = false;
     }
 }
 
@@ -89,7 +50,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
     if (!font)
         std::cout << "TTF_OpenFont Error: " << TTF_GetError() << std::endl;
 
-    Text titleText(Vector2f(WIN_WIDTH / 2 + 4, WIN_HEIGHT / 4 + 4), font, 2, globalRenderer, "Student Portal");
+    Text titleText(Vector2f(WIN_WIDTH / 2 + 4, WIN_HEIGHT / 4 + 4), font, 2.5, globalRenderer, "Student Portal");
 
     EntityInfo wallpaperImageInfo = window.loadImageInfo("../res/wallpaper.png");
     Entity wallpaperEntity(Vector2f(WIN_WIDTH / 2, WIN_HEIGHT / 2), wallpaperImageInfo, 2);
@@ -100,13 +61,9 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
             Button(Vector2f(WIN_WIDTH * 3 / 4, WIN_HEIGHT * 2 / 3), buttonImageInfo, 2)
     };
 
-    EntityInfo buttonTextInfoArray[2] = {
-            window.loadTextInfo("Log In", font, {0, 43, 54}),
-            window.loadTextInfo("Sign Up", font, {0, 43, 54})
-    };
-    Button buttonTextEntityArray[2] = {
-            Button(Vector2f(), buttonTextInfoArray[0], 1.2),
-            Button(Vector2f(), buttonTextInfoArray[1], 1.2)
+    std::vector<Button> buttonTextVector = {
+            Button(Vector2f(), window.loadTextInfo("Log In", font, {0, 43, 54}), 1.2),
+            Button(Vector2f(), window.loadTextInfo("Sign Up", font, {0, 43, 54}), 1.2)
     };
 
     bool run = true;
@@ -117,24 +74,14 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
             if (event.type == SDL_QUIT) {
                 run = false;
             }
-            for (Button &button: buttonImageVector) {
-                if (event.type == SDL_MOUSEBUTTONDOWN && event.button.state == SDL_BUTTON_LEFT) {
-                    SDL_FPoint p = {(float) event.button.x, (float) event.button.y};
-                    if (button.isHovered(p) && !button.clicked && !titleText.hidden) {
-                        for (Button &allButtons: buttonImageVector) {
-                            allButtons.resetExponent();
-                            allButtons.clicked = true;
-                        }
-                        titleText.resetExponent();
-                        titleText.hide = true;
+            for (Button &currButton: buttonImageVector) {
+                if (event.type == SDL_MOUSEBUTTONDOWN) {
+                    if (event.button.state == SDL_BUTTON_LEFT) {
+                        hideObjects(buttonImageVector, currButton, titleText, mousePos);
                     }
-                } else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE && button.clicked) {
-                    if (button.clicked && titleText.hidden) {
-                        for (Button &allButtons: buttonImageVector) {
-                            allButtons.clicked = false;
-                        }
-                        titleText.hide = false;
-                        titleText.resetTheta();
+                } else if (event.type == SDL_KEYDOWN) {
+                    if (event.key.keysym.sym == SDLK_ESCAPE) {
+                        showObjects(buttonImageVector, currButton, titleText);
                     }
                 }
             }
@@ -142,25 +89,24 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
         mousePos = RenderWindow::getMousePos();
 
         window.cls();
+        wallpaperEntity.animateScroll(globalRenderer, 0.5f, 0.5f);
 
-        wallpaperEntity.drawScroll(globalRenderer, 0.5f, 0.5f);
         titleText.hide ? titleText.animateHide() : titleText.animateShow();
-        if (!titleText.hidden)
+        if (!titleText.hidden) {
             titleText.animateWave(20.0f, 5.0f, false, true);
-        titleText.draw(globalRenderer);
+            titleText.draw(globalRenderer);
+        }
+
         for (int i = 0; i < buttonImageVector.size(); i++) {
             Button &currButton = buttonImageVector[i];
-            if (currButton.clicked) {
-                currButton.animateHide(WIN_HEIGHT);
-            } else {
-                currButton.animateShow();
-                if (!currButton.hidden)
-                    currButton.animateHover(mousePos);
-            }
-            currButton.drawStatic(globalRenderer);
+            currButton.hide ? currButton.animateHide(WIN_HEIGHT) : currButton.animateShow();
+            if (!currButton.hide)
+                currButton.animateHover(mousePos);
+            if (!currButton.hidden)
+                currButton.draw(globalRenderer);
 
-            buttonTextEntityArray[i].setPos(currButton.getPos(), currButton.getDstRect());
-            buttonTextEntityArray[i].drawStatic(globalRenderer);
+            buttonTextVector[i].setPos(currButton.getPos(), currButton.getDstRect());
+            buttonTextVector[i].draw(globalRenderer);
         }
 
         window.flip();

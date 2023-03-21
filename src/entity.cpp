@@ -14,7 +14,7 @@ void Entity::centerDstRect() {
     dstRect.y = currentPos.y;
 };
 
-void Entity::drawScroll(SDL_Renderer *renderer, float xSpeed, float ySpeed) {
+void Entity::animateScroll(SDL_Renderer *renderer, float xSpeed, float ySpeed) {
     for (int i = -1; i < 2; i++) {
         dstRect.x = (float)i * dstRect.w + xOffset;
         for (int j = -1; j < 2; j++) {
