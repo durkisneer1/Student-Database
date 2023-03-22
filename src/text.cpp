@@ -47,13 +47,15 @@ void Text::animateShow() {
 void Text::generateText(SDL_Renderer *renderer, TTF_Font *font, const std::string &text) {
     SDL_Surface *shadowSurface = TTF_RenderText_Solid(font, text.c_str(), {7, 54, 66});
     SDL_Surface *textSurface = TTF_RenderText_Solid(font, text.c_str(), {253, 246, 227});
-    SDL_Surface *dstSurface = SDL_CreateRGBSurface(0, shadowSurface->w + 2, shadowSurface->h + 2, 32,
+    SDL_Surface *dstSurface = SDL_CreateRGBSurface(0, textSurface->w + 2, textSurface->h + 2, 32,
                                                      0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
-    SDL_Rect textRect = {2, 2, shadowSurface->w, shadowSurface->h};
+
+    SDL_Rect textRect = {2, 2, textSurface->w, textSurface->h};
     SDL_BlitSurface(shadowSurface, nullptr, dstSurface, &textRect);
     SDL_BlitSurface(textSurface, nullptr, dstSurface, nullptr);
     srcRect = {0, 0, dstSurface->w, dstSurface->h};
     texture = SDL_CreateTextureFromSurface(renderer, dstSurface);
+
     SDL_FreeSurface(shadowSurface);
     SDL_FreeSurface(textSurface);
     SDL_FreeSurface(dstSurface);

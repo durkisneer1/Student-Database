@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Utils.hpp"
 #include "Wallpaper.hpp"
 #include "Text.hpp"
 #include "Button.hpp"
@@ -14,6 +15,7 @@ public:
     void cleanUp();
     void cls() { SDL_RenderClear(renderer); };
     void flip() { SDL_RenderPresent(renderer); };
+
     SDL_Renderer *getRenderer() { return renderer; };
     static SDL_FPoint getMousePos();
 private:

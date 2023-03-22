@@ -4,10 +4,7 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 
-#include "../include/RenderWindow.hpp"
-
-const float WIN_WIDTH = 880;
-const float WIN_HEIGHT = 640;
+#include "../include/States.hpp"
 
 
 void launchErrorCheck() {
@@ -49,63 +46,30 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
     if (!font)
         std::cout << "TTF_OpenFont Error: " << TTF_GetError() << std::endl;
 
-    Text titleText(Vector2f(WIN_WIDTH / 2 + 4, WIN_HEIGHT / 4 + 4), font, 2.5, globalRenderer, "Student Portal");
-
-    EntityInfo wallpaperImageInfo = window.loadImageInfo("../res/wallpaper.png");
-    Wallpaper wallpaperEntity(wallpaperImageInfo, 2);
-
-    EntityInfo buttonImageInfo = window.loadImageInfo("../res/button.png");
-    std::vector<Button> buttonImageVector = {
-            Button(Vector2f(WIN_WIDTH / 4, WIN_HEIGHT * 2 / 3), buttonImageInfo, 2),
-            Button(Vector2f(WIN_WIDTH * 3 / 4, WIN_HEIGHT * 2 / 3), buttonImageInfo, 2)
-    };
-    std::vector<Button> buttonTextVector = {
-            Button(Vector2f(), window.loadTextInfo("Log In", font, {0, 43, 54}), 1.2),
-            Button(Vector2f(), window.loadTextInfo("Sign Up", font, {0, 43, 54}), 1.2)
-    };
+    MenuState menuState(window, font);
 
     bool run = true;
     SDL_Event event;
     SDL_FPoint mousePos;
     while (run) {
         while (SDL_PollEvent(&event) != 0) {
-            if (event.type == SDL_QUIT) {
+            if (event.type == SDL_QUIT)
                 run = false;
-            }
-            for (Button &currButton: buttonImageVector) {
+            for (Button &currButton: menuState.getButtonVector()) {
                 if (event.type == SDL_MOUSEBUTTONDOWN) {
-                    if (event.button.state == SDL_BUTTON_LEFT) {
-                        hideObjects(buttonImageVector, currButton, titleText, mousePos);
-                    }
+                    if (event.button.state == SDL_BUTTON_LEFT)
+                        hideObjects(menuState.getButtonVector(), currButton, menuState.getTitleText(), mousePos);
                 } else if (event.type == SDL_KEYDOWN) {
-                    if (event.key.keysym.sym == SDLK_ESCAPE) {
-                        showObjects(buttonImageVector, currButton, titleText);
-                    }
+                    if (event.key.keysym.sym == SDLK_ESCAPE)
+                        showObjects(menuState.getButtonVector(), currButton, menuState.getTitleText());
                 }
             }
         }
         mousePos = RenderWindow::getMousePos();
-
         window.cls();
-        wallpaperEntity.animateScroll(globalRenderer, 0.5f, 0.5f);
 
-        titleText.hide ? titleText.animateHide() : titleText.animateShow();
-        if (!titleText.hidden) {
-            titleText.animateWave(20.0f, 5.0f, false, true);
-            titleText.draw(globalRenderer);
-        }
-
-        for (int i = 0; i < buttonImageVector.size(); i++) {
-            Button &currButton = buttonImageVector[i];
-            currButton.hide ? currButton.animateHide(WIN_HEIGHT) : currButton.animateShow();
-            if (!currButton.hide)
-                currButton.animateHover(mousePos);
-            if (!currButton.hidden)
-                currButton.draw(globalRenderer);
-
-            buttonTextVector[i].setPos(currButton.getPos(), currButton.getDstRect());
-            buttonTextVector[i].draw(globalRenderer);
-        }
+        menuState.update(mousePos);
+        menuState.draw(globalRenderer);
 
         window.flip();
         SDL_Delay(16);

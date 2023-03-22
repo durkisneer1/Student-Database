@@ -69,7 +69,7 @@
 			[
 				{
 					"backtrace" : 4,
-					"path" : "F:/Code/Student-Database/libs/SDL/include"
+					"path" : "D:/Code/Student-Database/libs/SDL/include"
 				}
 			],
 			"language" : "CXX",
@@ -88,7 +88,8 @@
 				4,
 				6,
 				8,
-				10
+				10,
+				13
 			]
 		}
 	],
@@ -107,7 +108,7 @@
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "-LF:\\Code\\Student-Database\\libs\\SDL\\lib",
+				"fragment" : "-LD:\\Code\\Student-Database\\libs\\SDL\\lib",
 				"role" : "libraryPath"
 			},
 			{
@@ -155,7 +156,8 @@
 				4,
 				6,
 				8,
-				10
+				10,
+				13
 			]
 		},
 		{
@@ -167,7 +169,8 @@
 				5,
 				7,
 				9,
-				11
+				11,
+				12
 			]
 		}
 	],
@@ -238,6 +241,17 @@
 			"backtrace" : 1,
 			"path" : "include/Utils.hpp",
 			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "include/States.hpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/states.cpp",
+			"sourceGroupIndex" : 0
 		}
 	],
 	"type" : "EXECUTABLE"
