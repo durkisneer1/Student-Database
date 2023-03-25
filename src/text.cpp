@@ -10,7 +10,7 @@ Text::Text(Vector2f pos, TTF_Font *font, float scaleFactor, SDL_Renderer *render
 void Text::centerDstRect() {
     dstRect.w = (float)srcRect.w * scaleFactor;
     dstRect.h = (float)srcRect.h * scaleFactor;
-    currentPos = {currentPos.x - dstRect.w / 2, currentPos.y - dstRect.h / 2};
+    currentPos = {originalPos.x - dstRect.w / 2, originalPos.y - dstRect.h / 2};
     dstRect.x = currentPos.x;
     dstRect.y = currentPos.y;
 };
@@ -23,25 +23,6 @@ void Text::animateWave(float amplitude, float frequency, bool x, bool y) {
     theta += frequency;
     if (theta >= 360)
         theta = 0;
-}
-
-void Text::animateHide() {
-    if (currentPos.y < -dstRect.h) {
-        hidden = true;
-        return;
-    }
-    currentPos.y -= powf(2, exponent);
-    dstRect.y = currentPos.y;
-    exponent += 0.2;
-}
-
-void Text::animateShow() {
-    if (currentPos.y > originalPos.y - dstRect.h / 2)
-        return;
-    hidden = false;
-    currentPos.y += powf(2, exponent);
-    dstRect.y = currentPos.y;
-    exponent -= 0.2;
 }
 
 void Text::generateText(SDL_Renderer *renderer, TTF_Font *font, const std::string &text) {

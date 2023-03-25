@@ -1,10 +1,10 @@
 #include <iostream>
-#include <vector>
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 
-#include "../include/States.hpp"
+#include "../include/MenuState.hpp"
+#include "../include/SignUpState.hpp"
 
 
 void launchErrorCheck() {
@@ -17,28 +17,8 @@ void launchErrorCheck() {
 }
 
 
-void hideObjects(std::vector<Button> &buttonVector, Button &currButton, Text &titleText, SDL_FPoint mousePos) {
-    if (currButton.isHovered(mousePos) && !currButton.hidden && !titleText.hidden) {
-        for (Button &allButtons: buttonVector) {
-            allButtons.resetExponent();
-            allButtons.hide = true;
-        }
-        titleText.resetExponent();
-        titleText.hide = true;
-    }
-}
-
-
-void showObjects(std::vector<Button> &buttonVector, Button &currButton, Text &titleText) {
-    if (currButton.hidden && titleText.hidden) {
-        for (Button &allButtons: buttonVector)
-            allButtons.hide = false;
-        titleText.hide = false;
-    }
-}
-
-
 int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
+    srand(time(nullptr));
     launchErrorCheck();
     RenderWindow window("Student Database", (int) WIN_WIDTH, (int) WIN_HEIGHT);
     SDL_Renderer *globalRenderer = window.getRenderer();
@@ -46,7 +26,10 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
     if (!font)
         std::cout << "TTF_OpenFont Error: " << TTF_GetError() << std::endl;
 
+    Wallpaper wallpaper(window.loadImageInfo("../res/wallpaper.png"), 2);
     MenuState menuState(window, font);
+    SignUpState signUpState(window, font);
+    States currState = MENU;
 
     bool run = true;
     SDL_Event event;
@@ -55,21 +38,26 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
         while (SDL_PollEvent(&event) != 0) {
             if (event.type == SDL_QUIT)
                 run = false;
-            for (Button &currButton: menuState.getButtonVector()) {
-                if (event.type == SDL_MOUSEBUTTONDOWN) {
-                    if (event.button.state == SDL_BUTTON_LEFT)
-                        hideObjects(menuState.getButtonVector(), currButton, menuState.getTitleText(), mousePos);
-                } else if (event.type == SDL_KEYDOWN) {
-                    if (event.key.keysym.sym == SDLK_ESCAPE)
-                        showObjects(menuState.getButtonVector(), currButton, menuState.getTitleText());
-                }
+
+            if (currState == MENU) {
+                menuState.input(event, currState);
+            } else if (currState == SIGNUP) {
+                signUpState.input(event, currState);
             }
         }
         mousePos = RenderWindow::getMousePos();
-        window.cls();
 
-        menuState.update(mousePos);
-        menuState.draw(globalRenderer);
+        window.cls();
+        wallpaper.animateScroll(globalRenderer, 0.5f, 0.5f);
+
+        if (currState == MENU) {
+            menuState.update(mousePos);
+            menuState.draw(globalRenderer);
+        } else if (currState == SIGNUP) {
+            signUpState.update(mousePos);
+            signUpState.draw(globalRenderer);
+        }
+
 
         window.flip();
         SDL_Delay(16);

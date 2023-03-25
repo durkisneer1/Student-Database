@@ -91,8 +91,15 @@ build CMakeFiles/Student_Database.dir/src/text.cpp.obj: CXX_COMPILER__Student_Da
   OBJECT_DIR = CMakeFiles\Student_Database.dir
   OBJECT_FILE_DIR = CMakeFiles\Student_Database.dir\src
 
-build CMakeFiles/Student_Database.dir/src/states.cpp.obj: CXX_COMPILER__Student_Database_Debug D$:/Code/Student-Database/src/states.cpp || cmake_object_order_depends_target_Student_Database
-  DEP_FILE = CMakeFiles\Student_Database.dir\src\states.cpp.obj.d
+build CMakeFiles/Student_Database.dir/src/menu_state.cpp.obj: CXX_COMPILER__Student_Database_Debug D$:/Code/Student-Database/src/menu_state.cpp || cmake_object_order_depends_target_Student_Database
+  DEP_FILE = CMakeFiles\Student_Database.dir\src\menu_state.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++23
+  INCLUDES = -ID:/Code/Student-Database/libs/SDL/include
+  OBJECT_DIR = CMakeFiles\Student_Database.dir
+  OBJECT_FILE_DIR = CMakeFiles\Student_Database.dir\src
+
+build CMakeFiles/Student_Database.dir/src/signup_state.cpp.obj: CXX_COMPILER__Student_Database_Debug D$:/Code/Student-Database/src/signup_state.cpp || cmake_object_order_depends_target_Student_Database
+  DEP_FILE = CMakeFiles\Student_Database.dir\src\signup_state.cpp.obj.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu++23
   INCLUDES = -ID:/Code/Student-Database/libs/SDL/include
   OBJECT_DIR = CMakeFiles\Student_Database.dir
@@ -106,7 +113,7 @@ build CMakeFiles/Student_Database.dir/src/states.cpp.obj: CXX_COMPILER__Student_
 #############################################
 # Link the executable Student_Database.exe
 
-build Student_Database.exe: CXX_EXECUTABLE_LINKER__Student_Database_Debug CMakeFiles/Student_Database.dir/src/main.cpp.obj CMakeFiles/Student_Database.dir/src/render_window.cpp.obj CMakeFiles/Student_Database.dir/src/wallpaper.cpp.obj CMakeFiles/Student_Database.dir/src/math.cpp.obj CMakeFiles/Student_Database.dir/src/button.cpp.obj CMakeFiles/Student_Database.dir/src/text.cpp.obj CMakeFiles/Student_Database.dir/src/states.cpp.obj
+build Student_Database.exe: CXX_EXECUTABLE_LINKER__Student_Database_Debug CMakeFiles/Student_Database.dir/src/main.cpp.obj CMakeFiles/Student_Database.dir/src/render_window.cpp.obj CMakeFiles/Student_Database.dir/src/wallpaper.cpp.obj CMakeFiles/Student_Database.dir/src/math.cpp.obj CMakeFiles/Student_Database.dir/src/button.cpp.obj CMakeFiles/Student_Database.dir/src/text.cpp.obj CMakeFiles/Student_Database.dir/src/menu_state.cpp.obj CMakeFiles/Student_Database.dir/src/signup_state.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lSDL2main  -lSDL2  -lSDL2_image  -lSDL2_ttf  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   LINK_PATH = -LD:/Code/Student-Database/libs/SDL/lib

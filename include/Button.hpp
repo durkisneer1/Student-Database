@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Text.hpp"
+#include "Utils.hpp"
 
 
 class Button {
@@ -9,18 +9,9 @@ public:
     void setDstRect(SDL_Rect srcRect, SDL_FRect &dstRect, float scale);
 
     void animateHover(SDL_FPoint mousePos);
-    void animateHide(float maxHeight);
-    void animateShow();
     void draw(SDL_Renderer *renderer);
 
-    Vector2f getPos() { return currentPos; }
-    SDL_FRect getDstRect() { return imgDstRect; }
     void setTextPos();
-    void resetExponent() { exponent = 0; }
-
-    bool isHovered(SDL_FPoint mousePos) { return SDL_PointInFRect(&mousePos, &imgDstRect); }
-    bool hide = false;
-    bool hidden = false;
 private:
     Vector2f currentPos;
     Vector2f idlePos;
@@ -34,6 +25,5 @@ private:
     SDL_Rect textSrcRect = {0, 0, 0, 0};
     SDL_FRect textDstRect = {0, 0, 0, 0};
 
-    float exponent = 0;
-    bool clickable = true;
+    std::string buttonText;
 };

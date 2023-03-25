@@ -21,6 +21,10 @@ add_executable(
         src/button.cpp
         include/Text.hpp
         src/text.cpp
-        include/Utils.hpp include/States.hpp src/states.cpp)
+        include/Utils.hpp
+        include/MenuState.hpp
+        src/menu_state.cpp
+        include/SignUpState.hpp
+        src/signup_state.cpp)
 
 target_link_libraries(${PROJECT_NAME} SDL2main SDL2 SDL2_image SDL2_ttf)

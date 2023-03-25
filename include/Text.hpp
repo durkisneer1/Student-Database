@@ -10,14 +10,7 @@ public:
     void centerDstRect();
 
     void animateWave(float amplitude, float frequency, bool x, bool y);
-    void animateHide();
-    void animateShow();
     void draw(SDL_Renderer *renderer) { SDL_RenderCopyF(renderer, texture, &srcRect, &dstRect); };
-
-    void resetExponent() { exponent = 0; }
-
-    bool hide = false;
-    bool hidden = false;
 private:
     Vector2f currentPos;
     Vector2f originalPos;
@@ -26,5 +19,4 @@ private:
     SDL_Texture *texture = nullptr;
     float scaleFactor;
     float theta = 0;
-    float exponent = 0;
 };

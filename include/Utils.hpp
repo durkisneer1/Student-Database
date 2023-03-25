@@ -14,3 +14,16 @@ struct EntityInfo {
     SDL_Texture *texture;
     int w, h;
 };
+
+enum States {
+    MENU,
+    LOGIN,
+    SIGNUP,
+};
+
+struct AppState {
+    virtual ~AppState() = default;
+    virtual void input(SDL_Event &event, States &state) = 0;
+    virtual void update(SDL_FPoint mousePos) = 0;
+    virtual void draw(SDL_Renderer *renderer) = 0;
+};
