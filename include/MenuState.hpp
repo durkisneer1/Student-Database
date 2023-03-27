@@ -15,7 +15,7 @@ private:
     TTF_Font *font;
 
     Text titleText = Text(
-            Vector2f(WIN_WIDTH / 2 + 4, WIN_HEIGHT / 4 + 4), font, 2.5, window.getRenderer(), "Student Portal"
+            Vector2f(WIN_WIDTH / 2, WIN_HEIGHT / 4), font, 2.5, window.getRenderer(), "Student Portal"
     );
 
     EntityInfo buttonImageInfo = window.loadImageInfo("../res/button.png");

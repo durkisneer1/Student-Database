@@ -14,6 +14,15 @@ void launchErrorCheck() {
         std::cout << "IMG_Init Error: " << IMG_GetError() << std::endl;
     if (TTF_Init() < 0)
         std::cout << "TTF_Init Error: " << TTF_GetError() << std::endl;
+    SDL_StartTextInput();
+}
+
+
+void quitInit() {
+    SDL_Quit();
+    IMG_Quit();
+    TTF_Quit();
+    SDL_StopTextInput();
 }
 
 
@@ -58,16 +67,13 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
             signUpState.draw(globalRenderer);
         }
 
-
         window.flip();
         SDL_Delay(16);
     }
 
     window.cleanUp();
-    SDL_Quit();
-    IMG_Quit();
     TTF_CloseFont(font);
-    TTF_Quit();
+    quitInit();
 
     return 0;
 }

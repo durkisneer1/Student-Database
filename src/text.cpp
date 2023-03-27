@@ -4,7 +4,6 @@
 Text::Text(Vector2f pos, TTF_Font *font, float scaleFactor, SDL_Renderer *renderer, const std::string &text)
 : currentPos(pos), scaleFactor(scaleFactor), originalPos(pos) {
     generateText(renderer, font, text);
-    centerDstRect();
 }
 
 void Text::centerDstRect() {
@@ -26,6 +25,9 @@ void Text::animateWave(float amplitude, float frequency, bool x, bool y) {
 }
 
 void Text::generateText(SDL_Renderer *renderer, TTF_Font *font, const std::string &text) {
+    if (texture != nullptr)
+        SDL_DestroyTexture(texture);
+
     SDL_Surface *shadowSurface = TTF_RenderText_Solid(font, text.c_str(), {7, 54, 66});
     SDL_Surface *textSurface = TTF_RenderText_Solid(font, text.c_str(), {253, 246, 227});
     SDL_Surface *dstSurface = SDL_CreateRGBSurface(0, textSurface->w + 2, textSurface->h + 2, 32,
@@ -36,6 +38,7 @@ void Text::generateText(SDL_Renderer *renderer, TTF_Font *font, const std::strin
     SDL_BlitSurface(textSurface, nullptr, dstSurface, nullptr);
     srcRect = {0, 0, dstSurface->w, dstSurface->h};
     texture = SDL_CreateTextureFromSurface(renderer, dstSurface);
+    centerDstRect();
 
     SDL_FreeSurface(shadowSurface);
     SDL_FreeSurface(textSurface);

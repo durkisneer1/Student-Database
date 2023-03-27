@@ -39,7 +39,7 @@ EntityInfo RenderWindow::loadTextInfo(const std::string &text, TTF_Font *font, S
 
     SDL_QueryTexture(texture, nullptr, nullptr, &w, &h);
     SDL_FreeSurface(surface);
-    return EntityInfo{texture, w, h};
+    return EntityInfo{texture, w, h, text};
 }
 
 void RenderWindow::cleanUp() {

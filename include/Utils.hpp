@@ -13,6 +13,7 @@
 struct EntityInfo {
     SDL_Texture *texture;
     int w, h;
+    std::string text;
 };
 
 enum States {

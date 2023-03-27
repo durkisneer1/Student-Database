@@ -4,6 +4,7 @@
 #include "Wallpaper.hpp"
 #include "Text.hpp"
 #include "Button.hpp"
+#include "MajorSelect.hpp"
 
 
 class RenderWindow {
