@@ -1,9 +1,11 @@
 #pragma once
 
 #include <vector>
+#include <fstream>
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+#include <json.hpp>
 
 #include "Math.hpp"
 #define WIN_WIDTH 880.0f

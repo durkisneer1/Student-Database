@@ -11,12 +11,6 @@ Button::Button(Vector2f pos, EntityInfo buttonImageInfo, EntityInfo buttonTextIn
     hoveredPos = {idlePos.x, idlePos.y + 10};
 }
 
-bool Button::collide(SDL_FPoint mousePos) {
-    if (SDL_PointInFRect(&mousePos, &imgDstRect)) {
-        return true;
-    }
-}
-
 void Button::setDstRect(SDL_Rect srcRect, SDL_FRect &dstRect, float scale) {
     dstRect.w = (float)srcRect.w * scale;
     dstRect.h = (float)srcRect.h * scale;

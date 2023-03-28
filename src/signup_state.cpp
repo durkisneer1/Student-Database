@@ -1,10 +1,24 @@
 #include "../include/SignUpState.hpp"
 #include <algorithm>
 
+using json = nlohmann::json;
 
 SignUpState::SignUpState(RenderWindow &window, TTF_Font *font)
 : window(window), font(font) {
     generateStudentId();
+}
+
+void SignUpState::saveData() {
+    json studentData = {
+            {std::to_string(studentId), {
+                    {"name", studentName},
+                    {"major", selectedMajor}
+            }}
+    };
+
+    std::ofstream file("../res/students.json");
+    file << studentData.dump(4);
+    file.close();
 }
 
 void SignUpState::generateStudentId() {
@@ -29,9 +43,9 @@ void SignUpState::input(SDL_Event &event, States &state) {
         if (event.type == SDL_KEYDOWN) {
             if (event.key.keysym.sym == SDLK_BACKSPACE && studentName.length() > 0) {
                 studentName.pop_back();
-            } else if (event.key.keysym.sym == SDLK_RETURN) {
+            } else if (event.key.keysym.sym == SDLK_RETURN && !studentName.empty() && !selectedMajor.empty()) {
                 std::transform(studentName.begin(), studentName.end(), studentName.begin(), ::toupper);
-                std::cout << studentId << " - " << studentName << " in " << selectedMajor << std::endl;
+                saveData();
             }
         } else if (event.type == SDL_TEXTINPUT)
             if (studentName.length() < 20)

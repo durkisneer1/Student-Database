@@ -11,6 +11,7 @@ public:
     void update(SDL_FPoint mousePos) override;
     void draw(SDL_Renderer *renderer) override;
 
+    void saveData();
     void generateStudentId();
 private:
     RenderWindow &window;

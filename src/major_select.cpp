@@ -13,12 +13,6 @@ MajorSelect::MajorSelect(Vector2f pos, const EntityInfo &idleOptionImageInfo, co
     setDstRect(textSrcRect, textDstRect, scaleFactor * 0.6f);
 }
 
-bool MajorSelect::collide(SDL_FPoint mousePos) {
-    if (SDL_PointInFRect(&mousePos, &imgDstRect)) {
-        return true;
-    }
-}
-
 void MajorSelect::setDstRect(SDL_Rect srcRect, SDL_FRect &dstRect, float scale) {
     dstRect.w = (float) srcRect.w * scale;
     dstRect.h = (float) srcRect.h * scale;

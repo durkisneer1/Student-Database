@@ -30,25 +30,25 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 11,
+				"line" : 12,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 9,
+				"line" : 10,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 30,
+				"line" : 33,
 				"parent" : 0
 			},
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 8,
+				"line" : 9,
 				"parent" : 0
 			}
 		]
@@ -69,7 +69,11 @@
 			[
 				{
 					"backtrace" : 4,
-					"path" : "F:/Code/Student-Database/libs/SDL/include"
+					"path" : "D:/Code/Student-Database/libs/SDL/include"
+				},
+				{
+					"backtrace" : 4,
+					"path" : "D:/Code/Student-Database/libs/JSON"
 				}
 			],
 			"language" : "CXX",
@@ -110,7 +114,7 @@
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "-LF:\\Code\\Student-Database\\libs\\SDL\\lib",
+				"fragment" : "-LD:\\Code\\Student-Database\\libs\\SDL\\lib",
 				"role" : "libraryPath"
 			},
 			{

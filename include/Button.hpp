@@ -8,7 +8,7 @@ public:
     Button(Vector2f pos, EntityInfo buttonImageInfo, EntityInfo buttonTextInfo, float scaleFactor);
     void setDstRect(SDL_Rect srcRect, SDL_FRect &dstRect, float scale);
 
-    bool collide(SDL_FPoint mousePos);
+    bool collide(SDL_FPoint mousePos) { return SDL_PointInFRect(&mousePos, &imgDstRect); };
     void animateHover(SDL_FPoint mousePos);
     void draw(SDL_Renderer *renderer);
     void setTextPos();

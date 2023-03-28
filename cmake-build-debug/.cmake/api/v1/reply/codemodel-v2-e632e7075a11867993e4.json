@@ -39,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "Student_Database::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-Student_Database-Debug-d980a13a92fc794a6073.json",
+					"jsonFile" : "target-Student_Database-Debug-0b83e033684baa4e9fcb.json",
 					"name" : "Student_Database",
 					"projectIndex" : 0
 				}
@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "F:/Code/Student-Database/cmake-build-debug",
-		"source" : "F:/Code/Student-Database"
+		"build" : "D:/Code/Student-Database/cmake-build-debug",
+		"source" : "D:/Code/Student-Database"
 	},
 	"version" : 
 	{
