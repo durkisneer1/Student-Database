@@ -1,7 +1,7 @@
 #include "../include/Wallpaper.hpp"
 
 
-Wallpaper::Wallpaper(EntityInfo entityInfo, float scaleFactor)
+Wallpaper::Wallpaper(const EntityInfo& entityInfo, float scaleFactor)
 : texture(entityInfo.texture), srcRect{0, 0, entityInfo.w, entityInfo.h}, scaleFactor(scaleFactor) {
     scaleDstRect();
 }
@@ -9,7 +9,7 @@ Wallpaper::Wallpaper(EntityInfo entityInfo, float scaleFactor)
 void Wallpaper::scaleDstRect() {
     dstRect.w = (float)srcRect.w * scaleFactor;
     dstRect.h = (float)srcRect.h * scaleFactor;
-};
+}
 
 void Wallpaper::animateScroll(SDL_Renderer *renderer, float xSpeed, float ySpeed) {
     for (int i = -1; i < 2; i++) {

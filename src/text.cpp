@@ -12,7 +12,7 @@ void Text::centerDstRect() {
     currentPos = {originalPos.x - dstRect.w / 2, originalPos.y - dstRect.h / 2};
     dstRect.x = currentPos.x;
     dstRect.y = currentPos.y;
-};
+}
 
 void Text::animateWave(float amplitude, float frequency, bool x, bool y) {
     if (y)

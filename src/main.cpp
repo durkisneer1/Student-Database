@@ -35,13 +35,12 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
         std::cout << "TTF_OpenFont Error: " << TTF_GetError() << std::endl;
 
     Wallpaper wallpaper(window.loadImageInfo("../res/wallpaper.png"), 2);
-    MenuState menuState(window, font);
+    MenuState menuState(window, font, <#initializer#>);
     SignUpState signUpState(window, font);
     States currState = MENU;
 
     bool run = true;
     SDL_Event event;
-    SDL_FPoint mousePos;
     while (run) {
         while (SDL_PollEvent(&event) != 0) {
             if (event.type == SDL_QUIT)
@@ -53,16 +52,15 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
                 signUpState.input(event, currState);
             }
         }
-        mousePos = RenderWindow::getMousePos();
 
         window.cls();
         wallpaper.animateScroll(globalRenderer, 0.5f, 0.5f);
 
         if (currState == MENU) {
-            menuState.update(mousePos);
+            menuState.update();
             menuState.draw(globalRenderer);
         } else if (currState == SIGNUP) {
-            signUpState.update(mousePos);
+            signUpState.update();
             signUpState.draw(globalRenderer);
         }
 

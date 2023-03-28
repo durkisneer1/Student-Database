@@ -11,7 +11,7 @@ public:
     void update();
     void draw(SDL_Renderer *renderer);
 private:
-    RenderWindow window;
+    RenderWindow &window;
     TTF_Font *font;
 
     Text titleText = Text(

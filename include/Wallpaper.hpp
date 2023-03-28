@@ -5,7 +5,7 @@
 
 class Wallpaper {
 public:
-    Wallpaper(EntityInfo entityInfo, float scaleFactor);
+    Wallpaper(const EntityInfo& entityInfo, float scaleFactor);
     void scaleDstRect();
 
     void draw(SDL_Renderer *renderer) { SDL_RenderCopyF(renderer, texture, &srcRect, &dstRect); };
