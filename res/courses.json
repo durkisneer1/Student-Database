@@ -1,5 +1,5 @@
 {
-  "Computer Science": {
+  "Comp Sci": {
       "Calculus": ["8:00am", 3],
       "Linear Algebra": ["9:30am",3],
       "Data Structures and Algorithms": ["12:00pm", 2],
@@ -17,22 +17,22 @@
       "Marketing": ["3:00pm", 3],
       "Sanitation and Safety": ["5:00pm", 1]
   },
+  "Philosophy": {
+    "Ancient Philosophy": ["10:00am", 2],
+    "Ethics": ["11:00pm",2],
+    "Metaphysics": ["1:00pm", 2],
+    "Epistemology": ["2:30pm", 2]
+  },
   "Nursing": {
       "Anatomy": ["9:30am",3],
       "Biology": ["11:00am",3],
       "Physical Education": ["1:00pm", 1],
       "Statistics": ["2:30pm",2]
   },
-  "Philosophy": {
-      "Ancient Philosophy": ["10:00am", 2],
-      "Ethics": ["11:00pm",2],
-      "Metaphysics": ["1:00pm", 2],
-      "Epistemology": ["2:30pm", 2]
-  },
-  "Criminal Justice": {
-      "Administration": ["8:00am",2],
-      "Ethics": ["10:00am", 2],
-      "Eyewitness Testimony": ["1:00pm", 3],
-      "Constitutional Law": ["3:00pm",3]
+  "English": {
+      "Composition": ["8:00am",2],
+      "Philosophy": ["10:00am", 2],
+      "Drama": ["1:00pm", 3],
+      "Literary Theory": ["3:00pm",3]
   }
 }
