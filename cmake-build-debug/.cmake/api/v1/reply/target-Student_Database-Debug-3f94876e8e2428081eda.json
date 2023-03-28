@@ -69,11 +69,11 @@
 			[
 				{
 					"backtrace" : 4,
-					"path" : "D:/Code/Student-Database/libs/SDL/include"
+					"path" : "F:/Code/Student-Database/libs/SDL/include"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "D:/Code/Student-Database/libs/JSON"
+					"path" : "F:/Code/Student-Database/libs/JSON"
 				}
 			],
 			"language" : "CXX",
@@ -114,7 +114,7 @@
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "-LD:\\Code\\Student-Database\\libs\\SDL\\lib",
+				"fragment" : "-LF:\\Code\\Student-Database\\libs\\SDL\\lib",
 				"role" : "libraryPath"
 			},
 			{

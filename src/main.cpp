@@ -27,7 +27,6 @@ void quitInit() {
 
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
-    srand(time(nullptr));
     launchErrorCheck();
     RenderWindow window("Student Database", (int) WIN_WIDTH, (int) WIN_HEIGHT);
     SDL_Renderer *globalRenderer = window.getRenderer();

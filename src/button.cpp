@@ -1,6 +1,6 @@
 #include "../include/Button.hpp"
 
-Button::Button(Vector2f pos, EntityInfo buttonImageInfo, EntityInfo buttonTextInfo, float scaleFactor)
+Button::Button(Vector2f pos, const EntityInfo& buttonImageInfo, const EntityInfo& buttonTextInfo, float scaleFactor)
 : currentPos(pos), imgTexture(buttonImageInfo.texture), textTexture(buttonTextInfo.texture) {
     this->imgSrcRect = {0, 0, buttonImageInfo.w, buttonImageInfo.h};
     this->textSrcRect = {0, 0, buttonTextInfo.w, buttonTextInfo.h};

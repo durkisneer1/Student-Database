@@ -8,35 +8,61 @@ SignUpState::SignUpState(RenderWindow &window, TTF_Font *font)
     generateStudentId();
 }
 
-void SignUpState::saveData() {
-    json studentData = {
-            {std::to_string(studentId), {
-                    {"name", studentName},
-                    {"major", selectedMajor}
-            }}
-    };
+void SignUpState::clearInfo() {
+    generateStudentId();
+    selectedMajor.clear();
+    studentName.clear();
+    nameText.generateText(window.getRenderer(), font, "Name: ");
+    for (MajorSelect &majorOption : majorOptionsVector) {
+        majorOption.selected = false;
+    }
+}
 
-    std::ofstream file("../res/students.json");
-    file << studentData.dump(4);
-    file.close();
+void SignUpState::saveData() {
+    std::ifstream readFile("../res/students.json");
+    json data;
+    if (readFile.is_open() && readFile.peek() != std::ifstream::traits_type::eof()) {
+        readFile >> data;
+    } else {
+        data = {{std::to_string(studentId), json::array()}};
+    }
+    readFile.close();
+
+    json newData = {
+            {"name", studentName},
+            {"major", selectedMajor}
+    };
+    data[std::to_string(studentId)].push_back(newData);
+
+    std::ofstream writeFile("../res/students.json");
+    writeFile << data.dump(4);
+    writeFile.close();
 }
 
 void SignUpState::generateStudentId() {
-    studentId = rand() % 999999 + 1000000;
+    std::uniform_int_distribution<> dis(1000000, 1999999);
+    studentId = dis(gen);
+
+    std::ifstream readFile("../res/students.json");
+    json data;
+    if (readFile.is_open() && readFile.peek() != std::ifstream::traits_type::eof()) {
+        readFile >> data;
+        for (json::iterator it = data.begin(); it != data.end(); ++it)
+            if (studentId == std::stoi(it.key())) {
+                studentId = dis(gen);
+                it = data.begin();
+            }
+    }
+
     idText.generateText(window.getRenderer(), font, std::to_string(studentId));
     idText.centerDstRect();
+    readFile.close();
 }
 
 void SignUpState::input(SDL_Event &event, States &state) {
     if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE) {
         if (event.key.keysym.sym == SDLK_ESCAPE) {
             state = MENU;
-            generateStudentId();
-            studentName.clear();
-            nameText.generateText(window.getRenderer(), font, "Name: ");
-            for (MajorSelect &majorOption : majorOptionsVector) {
-                majorOption.selected = false;
-            }
         }
 
     } else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN) {
@@ -46,6 +72,7 @@ void SignUpState::input(SDL_Event &event, States &state) {
             } else if (event.key.keysym.sym == SDLK_RETURN && !studentName.empty() && !selectedMajor.empty()) {
                 std::transform(studentName.begin(), studentName.end(), studentName.begin(), ::toupper);
                 saveData();
+                clearInfo();
             }
         } else if (event.type == SDL_TEXTINPUT)
             if (studentName.length() < 20)

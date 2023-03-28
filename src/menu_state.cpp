@@ -18,7 +18,7 @@ void MenuState::input(SDL_Event &event, States &state) {
     }
 }
 
-void MenuState::update(SDL_FPoint mousePos) {
+void MenuState::update() {
     titleText.animateWave(20.0f, 5.0f, false, true);
     for (Button &button: buttonVector)
         button.animateHover(RenderWindow::getMousePos());

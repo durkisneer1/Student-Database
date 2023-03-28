@@ -5,7 +5,7 @@
 
 class Button {
 public:
-    Button(Vector2f pos, EntityInfo buttonImageInfo, EntityInfo buttonTextInfo, float scaleFactor);
+    Button(Vector2f pos, const EntityInfo& buttonImageInfo, const EntityInfo& buttonTextInfo, float scaleFactor);
     void setDstRect(SDL_Rect srcRect, SDL_FRect &dstRect, float scale);
 
     bool collide(SDL_FPoint mousePos) { return SDL_PointInFRect(&mousePos, &imgDstRect); };

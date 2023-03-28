@@ -1,9 +1,14 @@
 #include "../include/MajorSelect.hpp"
 
-MajorSelect::MajorSelect(Vector2f pos, const EntityInfo &idleOptionImageInfo, const EntityInfo &selectOptionImageInfo,
-                         const EntityInfo &optionTextInfo, float scaleFactor)
-    : pos(pos), idleImgTexture(idleOptionImageInfo.texture), selectImgTexture(selectOptionImageInfo.texture),
-      textTexture(optionTextInfo.texture) {
+MajorSelect::MajorSelect(
+    Vector2f pos,
+    const EntityInfo &idleOptionImageInfo, const EntityInfo &selectOptionImageInfo, const EntityInfo &optionTextInfo,
+    float scaleFactor
+    )
+: pos(pos),
+idleImgTexture(idleOptionImageInfo.texture),
+selectImgTexture(selectOptionImageInfo.texture),
+textTexture(optionTextInfo.texture) {
 
     this->imgSrcRect = {0, 0, idleOptionImageInfo.w, idleOptionImageInfo.h};
     this->textSrcRect = {0, 0, optionTextInfo.w, optionTextInfo.h};

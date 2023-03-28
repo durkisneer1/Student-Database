@@ -17,7 +17,6 @@ add_executable(
         include/Wallpaper.hpp
         src/wallpaper.cpp
         include/Math.hpp
-        src/math.cpp
         include/Button.hpp
         src/button.cpp
         include/Text.hpp

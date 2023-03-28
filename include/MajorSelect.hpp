@@ -5,8 +5,10 @@
 
 class MajorSelect {
 public:
-    MajorSelect(Vector2f pos, const EntityInfo &idleOptionImageInfo, const EntityInfo &selectOptionImageInfo,
-                const EntityInfo &optionTextInfo, float scaleFactor);
+    MajorSelect(
+        Vector2f pos,
+        const EntityInfo &idleOptionImageInfo, const EntityInfo &selectOptionImageInfo, const EntityInfo &optionTextInfo,
+        float scaleFactor);
 
     void setDstRect(SDL_Rect srcRect, SDL_FRect &dstRect, float scale);
     bool collide(SDL_FPoint mousePos) { return SDL_PointInFRect(&mousePos, &imgDstRect); };
