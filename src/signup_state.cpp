@@ -90,7 +90,7 @@ void SignUpState::input(SDL_Event &event, States &state) {
     }
 }
 
-void SignUpState::update(SDL_FPoint mousePos) {}
+void SignUpState::update() {}
 
 void SignUpState::draw(SDL_Renderer *renderer) {
     idText.draw(renderer);
