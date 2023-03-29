@@ -27,6 +27,6 @@ add_executable(
         include/SignUpState.hpp
         src/signup_state.cpp
         include/MajorSelect.hpp
-        src/major_select.cpp)
+        src/major_select.cpp include/LogInState.hpp src/login_state.cpp)
 
 target_link_libraries(${PROJECT_NAME} SDL2main SDL2 SDL2_image SDL2_ttf)

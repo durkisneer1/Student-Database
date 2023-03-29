@@ -1,8 +1,6 @@
 #include "../include/SignUpState.hpp"
 #include <algorithm>
 
-using json = nlohmann::json;
-
 SignUpState::SignUpState(RenderWindow &window, TTF_Font *font)
 : window(window), font(font) {
     generateStudentId();
@@ -32,7 +30,7 @@ void SignUpState::saveData() {
             {"name", studentName},
             {"major", selectedMajor}
     };
-    data[std::to_string(studentId)].push_back(newData);
+    data[std::to_string(studentId)] = newData;
 
     std::ofstream writeFile("../res/students.json");
     writeFile << data.dump(4);
@@ -61,9 +59,8 @@ void SignUpState::generateStudentId() {
 
 void SignUpState::input(SDL_Event &event, States &state) {
     if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE) {
-        if (event.key.keysym.sym == SDLK_ESCAPE) {
+        if (event.key.keysym.sym == SDLK_ESCAPE)
             state = MENU;
-        }
 
     } else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN) {
         if (event.type == SDL_KEYDOWN) {

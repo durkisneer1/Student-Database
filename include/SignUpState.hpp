@@ -4,6 +4,8 @@
 
 #include "RenderWindow.hpp"
 
+using json = nlohmann::json;
+
 
 class SignUpState {
 public:

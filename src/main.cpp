@@ -5,6 +5,12 @@
 
 #include "../include/MenuState.hpp"
 #include "../include/SignUpState.hpp"
+#include "../include/LogInState.hpp"
+
+
+void showStudentMajorDetails() {
+    json data;
+}
 
 
 void launchErrorCheck() {
@@ -35,8 +41,9 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
         std::cout << "TTF_OpenFont Error: " << TTF_GetError() << std::endl;
 
     Wallpaper wallpaper(window.loadImageInfo("../res/wallpaper.png"), 2);
-    MenuState menuState(window, font, <#initializer#>);
+    MenuState menuState(window, font);
     SignUpState signUpState(window, font);
+    LogInState logInState(window, font);
     States currState = MENU;
 
     bool run = true;
@@ -50,6 +57,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
                 menuState.input(event, currState);
             } else if (currState == SIGNUP) {
                 signUpState.input(event, currState);
+            } else if (currState == LOGIN) {
+                logInState.input(event, currState);
             }
         }
 
@@ -62,6 +71,9 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
         } else if (currState == SIGNUP) {
             signUpState.update();
             signUpState.draw(globalRenderer);
+        } else if (currState == LOGIN) {
+            logInState.update();
+            logInState.draw(globalRenderer);
         }
 
         window.flip();

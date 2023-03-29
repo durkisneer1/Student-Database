@@ -9,7 +9,7 @@ void MenuState::input(SDL_Event &event, States &state) {
         if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT) {
             if (buttonVector[i].collide(RenderWindow::getMousePos())) {
                 if (i == 0) {
-                    state = SIGNUP;
+                    state = LOGIN;
                 } else if (i == 1) {
                     state = SIGNUP;
                 }
