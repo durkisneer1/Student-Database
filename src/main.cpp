@@ -8,11 +8,6 @@
 #include "../include/LogInState.hpp"
 
 
-void showStudentMajorDetails() {
-    json data;
-}
-
-
 void launchErrorCheck() {
     if (SDL_Init(SDL_INIT_VIDEO))
         std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
@@ -69,10 +64,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
             menuState.update();
             menuState.draw(globalRenderer);
         } else if (currState == SIGNUP) {
-            signUpState.update();
             signUpState.draw(globalRenderer);
         } else if (currState == LOGIN) {
-            logInState.update();
             logInState.draw(globalRenderer);
         }
 

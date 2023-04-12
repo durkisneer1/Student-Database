@@ -12,7 +12,6 @@ public:
     SignUpState(RenderWindow &window, TTF_Font *font);
 
     void input(SDL_Event &event, States &state);
-    void update();
     void draw(SDL_Renderer *renderer);
 
     void clearInfo();
