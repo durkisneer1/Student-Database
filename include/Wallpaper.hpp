@@ -10,6 +10,7 @@ public:
 
     void draw(SDL_Renderer *renderer) { SDL_RenderCopyF(renderer, texture, &srcRect, &dstRect); };
     void animateScroll(SDL_Renderer *renderer, float xSpeed, float ySpeed);
+
 protected:
     SDL_Rect srcRect;
     SDL_FRect dstRect = {0, 0, 0, 0};

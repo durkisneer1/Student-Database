@@ -1,7 +1,6 @@
 #pragma once
 
 #include <random>
-
 #include "RenderWindow.hpp"
 
 using json = nlohmann::json;
@@ -17,18 +16,22 @@ public:
     void clearInfo();
     void saveData();
     void generateStudentId();
+
 private:
     RenderWindow &window;
     TTF_Font *font;
+
     int studentId = 0;
     std::string studentName;
     std::string selectedMajor;
 
+    // Random number generator
     std::random_device rd;
     std::mt19937_64 gen{rd()};
 
     Text idText = Text(
-        Vector2f(WIN_WIDTH / 2, WIN_HEIGHT / 8), font, 2.5, window.getRenderer(), std::to_string(studentId));
+        Vector2f(WIN_WIDTH / 2, WIN_HEIGHT / 8), font, 2.5, window.getRenderer(), std::to_string(studentId)
+    );
     Text nameText = Text(Vector2f(WIN_WIDTH / 2, WIN_HEIGHT / 4), font, 1.5, window.getRenderer(), "Name: ");
 
     EntityInfo idleOptionImageInfo = window.loadImageInfo("../res/idle_selection.png");

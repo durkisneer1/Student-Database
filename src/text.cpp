@@ -6,6 +6,10 @@ Text::Text(Vector2f pos, TTF_Font *font, float scaleFactor, SDL_Renderer *render
     generateText(renderer, font, text);
 }
 
+void Text::clear(SDL_Renderer *renderer, TTF_Font *font) {
+    generateText(renderer, font, " ");
+}
+
 void Text::centerDstRect() {
     dstRect.w = (float)srcRect.w * scaleFactor;
     dstRect.h = (float)srcRect.h * scaleFactor;

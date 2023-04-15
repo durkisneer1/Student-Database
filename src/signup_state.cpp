@@ -11,9 +11,8 @@ void SignUpState::clearInfo() {
     selectedMajor.clear();
     studentName.clear();
     nameText.generateText(window.getRenderer(), font, "Name: ");
-    for (MajorSelect &majorOption : majorOptionsVector) {
+    for (MajorSelect &majorOption : majorOptionsVector)
         majorOption.selected = false;
-    }
 }
 
 void SignUpState::saveData() {
@@ -27,8 +26,8 @@ void SignUpState::saveData() {
     readFile.close();
 
     json newData = {
-            {"name", studentName},
-            {"major", selectedMajor}
+        {"name", studentName},
+        {"major", selectedMajor}
     };
     data[std::to_string(studentId)] = newData;
 
@@ -43,14 +42,15 @@ void SignUpState::generateStudentId() {
 
     std::ifstream readFile("../res/students.json");
     json data;
-    if (readFile.is_open() && readFile.peek() != std::ifstream::traits_type::eof()) {
-        readFile >> data;
-        for (json::iterator it = data.begin(); it != data.end(); ++it)
-            if (studentId == std::stoi(it.key())) {
-                studentId = dis(gen);
-                it = data.begin();
-            }
-    }
+    if (readFile.is_open() && readFile.peek() == std::ifstream::traits_type::eof())
+        return;
+    readFile >> data;
+
+    for (json::iterator it = data.begin(); it != data.end(); ++it)
+        if (studentId == std::stoi(it.key())) {
+            studentId = dis(gen);
+            it = data.begin();
+        }
 
     idText.generateText(window.getRenderer(), font, std::to_string(studentId));
     idText.centerDstRect();
@@ -59,9 +59,7 @@ void SignUpState::generateStudentId() {
 
 void SignUpState::input(SDL_Event &event, States &state) {
     if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE) {
-        if (event.key.keysym.sym == SDLK_ESCAPE)
-            state = MENU;
-
+        state = MENU;
     } else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN) {
         if (event.type == SDL_KEYDOWN) {
             if (event.key.keysym.sym == SDLK_BACKSPACE && studentName.length() > 0) {

@@ -19,6 +19,7 @@ public:
 
     SDL_Renderer *getRenderer() { return renderer; };
     static SDL_FPoint getMousePos();
+
 private:
     SDL_Window *window;
     SDL_Renderer *renderer;

@@ -7,16 +7,20 @@ class MajorSelect {
 public:
     MajorSelect(
         Vector2f pos,
-        const EntityInfo &idleOptionImageInfo, const EntityInfo &selectOptionImageInfo, const EntityInfo &optionTextInfo,
-        float scaleFactor);
+        const EntityInfo &idleOptionImageInfo,
+        const EntityInfo &selectOptionImageInfo,
+        const EntityInfo &optionTextInfo,
+        float scaleFactor
+    );
 
+    void draw(SDL_Renderer *renderer);
     void setDstRect(SDL_Rect srcRect, SDL_FRect &dstRect, float scale);
     bool collide(SDL_FPoint mousePos) { return SDL_PointInFRect(&mousePos, &imgDstRect); };
-    void draw(SDL_Renderer *renderer);
     void setTextPos();
 
     bool selected = false;
     std::string major;
+
 private:
     Vector2f pos;
 

@@ -2,58 +2,75 @@
 
 
 LogInState::LogInState(RenderWindow &window, TTF_Font *font)
-        : window(window), font(font) {}
+: window(window), font(font) {}
+
+void LogInState::renderIdNotFound() {
+    nameText.generateText(window.getRenderer(), font, "ID not found.");
+    nameText.centerDstRect();
+}
 
 void LogInState::getStudentInfo() {
-    std::ifstream readStudents("../res/students.json");
-    std::ifstream readCourses("../res/courses.json");
+    std::ifstream studentFile("../res/students.json");
+    std::ifstream courseFile("../res/courses.json");
     json studentData;
     json courseData;
-    if (readStudents.is_open() && readStudents.peek() != std::ifstream::traits_type::eof()) {
-        readStudents >> studentData;
-        readCourses >> courseData;
-        if (studentData.contains(studentId)) {
-            // student ID found, display their information
-            json studentHash = studentData[studentId];
-            std::string name = studentHash["name"];
-            std::string major = studentHash["major"];
-            std::vector<std::string> courses;
-            std::vector<std::string> timeSchedules;
-            std::vector<std::string> creditHours;
-            for (auto& course : courseData[major].items()) {
-                courses.push_back(course.key());
-                timeSchedules.push_back(course.value()[0]);
-                int creditHoursInt = course.value()[1];
-                creditHours.push_back(std::to_string(creditHoursInt));
-            }
 
-            nameText.generateText(
-                    window.getRenderer(), font, "Name: " + name);
-            nameText.centerDstRect();
-            majorText.generateText(
-                    window.getRenderer(), font, "Major: " + major);
-            majorText.centerDstRect();
-
-            for (int i = 0; i < courseTexts.size(); i++) {
-                courseTexts[i].generateText(
-                        window.getRenderer(), font,
-                        courses[i] + " @ " + timeSchedules[i] + " - " + creditHours[i] + " CH.");
-                courseTexts[i].centerDstRect();
-            }
-        } else {
-            // student ID not found
-            nameText.generateText(window.getRenderer(), font, "ID not found.");
-            nameText.centerDstRect();
-        }
+    if (studentFile.is_open() && studentFile.peek() == std::ifstream::traits_type::eof()) {
+        renderIdNotFound();
+        return;
     }
-    readStudents.close();
-    readCourses.close();
+    studentFile >> studentData;
+    courseFile >> courseData;
+    studentFile.close();
+    courseFile.close();
+    if (!studentData.contains(studentId)) {
+        nameText.clear(window.getRenderer(), font);
+        majorText.clear(window.getRenderer(), font);
+        for (Text& courseText : courseTexts)
+            courseText.clear(window.getRenderer(), font);
+        renderIdNotFound();
+        return;
+    }
+
+    // student ID found, display their information
+    json studentObject = studentData[studentId];
+    std::string name = studentObject["name"];
+    std::string major = studentObject["major"];
+
+    std::vector<std::string> courseTaken;
+    std::vector<std::string> timeSchedules;
+    std::vector<std::string> creditHours;
+
+    for (auto& course : courseData[major].items()) {
+        courseTaken.push_back(course.key());
+        timeSchedules.push_back(course.value()[0]);
+        int creditHoursInt = course.value()[1];
+        creditHours.push_back(std::to_string(creditHoursInt));
+    }
+
+    // Generate student information
+    nameText.generateText(
+        window.getRenderer(), font, "Name: " + name
+    );
+    nameText.centerDstRect();
+
+    majorText.generateText(
+        window.getRenderer(), font, "Major: " + major
+    );
+    majorText.centerDstRect();
+
+    for (int i = 0; i < courseTexts.size(); i++) {
+        courseTexts[i].generateText(
+            window.getRenderer(), font,
+            courseTaken[i] + " @ " + timeSchedules[i] + " - " + creditHours[i] + " CH."
+        );
+        courseTexts[i].centerDstRect();
+    }
 }
 
 void LogInState::input(SDL_Event &event, States &state) {
     if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE) {
-        if (event.key.keysym.sym == SDLK_ESCAPE)
-            state = MENU;
+        state = MENU;
     } else if (event.type == SDL_TEXTINPUT || event.type == SDL_KEYDOWN) {
         if (event.type == SDL_KEYDOWN) {
             if (event.key.keysym.sym == SDLK_BACKSPACE && studentId.length() > 0) {

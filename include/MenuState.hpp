@@ -10,6 +10,7 @@ public:
     void input(SDL_Event &event, States &state);
     void update();
     void draw(SDL_Renderer *renderer);
+
 private:
     RenderWindow &window;
     TTF_Font *font;

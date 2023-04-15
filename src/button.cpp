@@ -20,11 +20,7 @@ void Button::setDstRect(SDL_Rect srcRect, SDL_FRect &dstRect, float scale) {
 }
 
 void Button::animateHover(SDL_FPoint mousePos) {
-    if (collide(mousePos)) {
-        currentPos = hoveredPos;
-    } else {
-        currentPos = idlePos;
-    }
+    currentPos = collide(mousePos) ? hoveredPos : idlePos;
     imgDstRect.y = currentPos.y;
 }
 

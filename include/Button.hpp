@@ -12,6 +12,7 @@ public:
     void animateHover(SDL_FPoint mousePos);
     void draw(SDL_Renderer *renderer);
     void setTextPos();
+
 private:
     Vector2f currentPos;
     Vector2f idlePos;
