@@ -1,16 +1,21 @@
-#include "../include/Text.hpp"
-
+#include "Text.hpp"
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
 
 Text::Text(Vector2f pos, TTF_Font *font, float scaleFactor, SDL_Renderer *renderer, const std::string &text)
-: currentPos(pos), scaleFactor(scaleFactor), originalPos(pos) {
+    : currentPos(pos), originalPos(pos), scaleFactor(scaleFactor)
+{
     generateText(renderer, font, text);
 }
 
-void Text::clear(SDL_Renderer *renderer, TTF_Font *font) {
+void Text::clear(SDL_Renderer *renderer, TTF_Font *font)
+{
     generateText(renderer, font, " ");
 }
 
-void Text::centerDstRect() {
+void Text::centerDstRect()
+{
     dstRect.w = (float)srcRect.w * scaleFactor;
     dstRect.h = (float)srcRect.h * scaleFactor;
     currentPos = {originalPos.x - dstRect.w / 2, originalPos.y - dstRect.h / 2};
@@ -18,7 +23,8 @@ void Text::centerDstRect() {
     dstRect.y = currentPos.y;
 }
 
-void Text::animateWave(float amplitude, float frequency, bool x, bool y) {
+void Text::animateWave(float amplitude, float frequency, bool x, bool y)
+{
     if (y)
         dstRect.y = currentPos.y + sinf((float)(theta * (M_PI / 180))) * amplitude;
     if (x)
@@ -28,14 +34,15 @@ void Text::animateWave(float amplitude, float frequency, bool x, bool y) {
         theta = 0;
 }
 
-void Text::generateText(SDL_Renderer *renderer, TTF_Font *font, const std::string &text) {
+void Text::generateText(SDL_Renderer *renderer, TTF_Font *font, const std::string &text)
+{
     if (texture != nullptr)
         SDL_DestroyTexture(texture);
 
     SDL_Surface *shadowSurface = TTF_RenderText_Solid(font, text.c_str(), {7, 54, 66});
     SDL_Surface *textSurface = TTF_RenderText_Solid(font, text.c_str(), {253, 246, 227});
     SDL_Surface *dstSurface = SDL_CreateRGBSurface(0, textSurface->w + 2, textSurface->h + 2, 32,
-                                                     0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
+                                                   0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
 
     SDL_Rect textRect = {2, 2, textSurface->w, textSurface->h};
     SDL_BlitSurface(shadowSurface, nullptr, dstSurface, &textRect);

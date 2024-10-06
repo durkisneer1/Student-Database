@@ -1,22 +1,24 @@
 #include <iostream>
+#include <SDL_image.h>
+#include <SDL_ttf.h>
 
-#include "../include/RenderWindow.hpp"
+#include "RenderWindow.hpp"
 
-
-RenderWindow::RenderWindow(const std::string &title, int width, int height) {
+RenderWindow::RenderWindow(const std::string &title, int width, int height)
+{
     window = SDL_CreateWindow(
         title.c_str(),
         SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
         width, height,
-        SDL_WINDOW_SHOWN
-    );
+        SDL_WINDOW_SHOWN);
 
     if (window == nullptr)
         std::cout << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 }
 
-EntityInfo RenderWindow::loadImageInfo(const std::string &filePath) {
+EntityInfo RenderWindow::loadImageInfo(const std::string &filePath)
+{
     SDL_Texture *texture;
     int w, h;
     texture = IMG_LoadTexture(renderer, filePath.c_str());
@@ -27,7 +29,8 @@ EntityInfo RenderWindow::loadImageInfo(const std::string &filePath) {
     return EntityInfo{texture, w, h};
 }
 
-EntityInfo RenderWindow::loadTextInfo(const std::string &text, TTF_Font *font, SDL_Color color) {
+EntityInfo RenderWindow::loadTextInfo(const std::string &text, TTF_Font *font, SDL_Color color)
+{
     SDL_Texture *texture;
     int w, h;
     SDL_Surface *surface = TTF_RenderText_Solid(font, text.c_str(), color);
@@ -43,12 +46,14 @@ EntityInfo RenderWindow::loadTextInfo(const std::string &text, TTF_Font *font, S
     return EntityInfo{texture, w, h, text};
 }
 
-void RenderWindow::cleanUp() {
+void RenderWindow::cleanUp()
+{
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
 }
 
-SDL_FPoint RenderWindow::getMousePos() {
+SDL_FPoint RenderWindow::getMousePos()
+{
     int x, y;
     SDL_GetMouseState(&x, &y);
     return {(float)x, (float)y};

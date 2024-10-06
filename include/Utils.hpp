@@ -1,24 +1,20 @@
 #pragma once
 
-#include <vector>
-#include <fstream>
 #include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_ttf.h>
-#include <json.hpp>
+#include <string>
 
-#include "Math.hpp"
 #define WIN_WIDTH 880.0f
 #define WIN_HEIGHT 640.0f
 
-
-struct EntityInfo {
+struct EntityInfo
+{
     SDL_Texture *texture;
     int w, h;
     std::string text;
 };
 
-enum States {
+enum States
+{
     MENU,
     LOGIN,
     SIGNUP,

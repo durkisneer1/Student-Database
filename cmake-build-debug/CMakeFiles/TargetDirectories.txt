@@ -1,3 +1,0 @@
-F:/Code/Student-Database/cmake-build-debug/CMakeFiles/Student_Database.dir
-F:/Code/Student-Database/cmake-build-debug/CMakeFiles/edit_cache.dir
-F:/Code/Student-Database/cmake-build-debug/CMakeFiles/rebuild_cache.dir

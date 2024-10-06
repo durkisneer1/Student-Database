@@ -1,17 +1,17 @@
 #pragma once
 
 #include "Utils.hpp"
+#include "Math.hpp"
 
-
-class MajorSelect {
+class MajorSelect
+{
 public:
     MajorSelect(
         Vector2f pos,
         const EntityInfo &idleOptionImageInfo,
         const EntityInfo &selectOptionImageInfo,
         const EntityInfo &optionTextInfo,
-        float scaleFactor
-    );
+        float scaleFactor);
 
     void draw(SDL_Renderer *renderer);
     void setDstRect(SDL_Rect srcRect, SDL_FRect &dstRect, float scale);

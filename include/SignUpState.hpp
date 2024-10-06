@@ -1,12 +1,15 @@
 #pragma once
 
 #include <random>
+#include <json.hpp>
 #include "RenderWindow.hpp"
+#include "MajorSelect.hpp"
+#include "Text.hpp"
 
 using json = nlohmann::json;
 
-
-class SignUpState {
+class SignUpState
+{
 public:
     SignUpState(RenderWindow &window, TTF_Font *font);
 
@@ -30,8 +33,7 @@ private:
     std::mt19937_64 gen{rd()};
 
     Text idText = Text(
-        Vector2f(WIN_WIDTH / 2, WIN_HEIGHT / 8), font, 2.5, window.getRenderer(), std::to_string(studentId)
-    );
+        Vector2f(WIN_WIDTH / 2, WIN_HEIGHT / 8), font, 2.5, window.getRenderer(), std::to_string(studentId));
     Text nameText = Text(Vector2f(WIN_WIDTH / 2, WIN_HEIGHT / 4), font, 1.5, window.getRenderer(), "Name: ");
 
     EntityInfo idleOptionImageInfo = window.loadImageInfo("../res/idle_selection.png");
@@ -46,22 +48,16 @@ private:
 
     std::vector<MajorSelect> majorOptionsVector = {
         MajorSelect(
-            Vector2f(WIN_WIDTH / 4, WIN_HEIGHT / 3), idleOptionImageInfo, selectOptionImageInfo, compSciOption, 2
-        ),
+            Vector2f(WIN_WIDTH / 4, WIN_HEIGHT / 3), idleOptionImageInfo, selectOptionImageInfo, compSciOption, 2),
         MajorSelect(
-            Vector2f(WIN_WIDTH * 3 / 4, WIN_HEIGHT / 3), idleOptionImageInfo, selectOptionImageInfo, businessOption, 2
-        ),
+            Vector2f(WIN_WIDTH * 3 / 4, WIN_HEIGHT / 3), idleOptionImageInfo, selectOptionImageInfo, businessOption, 2),
         MajorSelect(
-            Vector2f(WIN_WIDTH / 4, WIN_HEIGHT / 2), idleOptionImageInfo, selectOptionImageInfo, culinaryOption, 2
-        ),
+            Vector2f(WIN_WIDTH / 4, WIN_HEIGHT / 2), idleOptionImageInfo, selectOptionImageInfo, culinaryOption, 2),
         MajorSelect(
-            Vector2f(WIN_WIDTH * 3 / 4, WIN_HEIGHT / 2), idleOptionImageInfo, selectOptionImageInfo, philosophyOption, 2
-        ),
+            Vector2f(WIN_WIDTH * 3 / 4, WIN_HEIGHT / 2), idleOptionImageInfo, selectOptionImageInfo, philosophyOption, 2),
         MajorSelect(
-            Vector2f(WIN_WIDTH / 4, WIN_HEIGHT * 2 / 3), idleOptionImageInfo, selectOptionImageInfo, nursingOption, 2
-        ),
+            Vector2f(WIN_WIDTH / 4, WIN_HEIGHT * 2 / 3), idleOptionImageInfo, selectOptionImageInfo, nursingOption, 2),
         MajorSelect(
-            Vector2f(WIN_WIDTH * 3 / 4, WIN_HEIGHT * 2 / 3), idleOptionImageInfo, selectOptionImageInfo, englishOption, 2
-        )
+            Vector2f(WIN_WIDTH * 3 / 4, WIN_HEIGHT * 2 / 3), idleOptionImageInfo, selectOptionImageInfo, englishOption, 2),
     };
 };

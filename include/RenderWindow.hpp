@@ -1,13 +1,10 @@
 #pragma once
 
 #include "Utils.hpp"
-#include "Wallpaper.hpp"
-#include "Text.hpp"
-#include "Button.hpp"
-#include "MajorSelect.hpp"
+#include <SDL_ttf.h>
 
-
-class RenderWindow {
+class RenderWindow
+{
 public:
     RenderWindow(const std::string &title, int width, int height);
     EntityInfo loadImageInfo(const std::string &filePath);

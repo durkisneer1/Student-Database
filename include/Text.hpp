@@ -1,9 +1,12 @@
 #pragma once
 
-#include "Utils.hpp"
+#include <string>
+#include <SDL.h>
+#include <SDL_ttf.h>
+#include "Math.hpp"
 
-
-class Text {
+class Text
+{
 public:
     Text(Vector2f pos, TTF_Font *font, float scaleFactor, SDL_Renderer *renderer, const std::string &text);
     void generateText(SDL_Renderer *renderer, TTF_Font *font, const std::string &text);
@@ -16,9 +19,9 @@ public:
 private:
     Vector2f currentPos;
     Vector2f originalPos;
+    SDL_Texture *texture = nullptr;
     SDL_Rect srcRect = {0, 0, 0, 0};
     SDL_FRect dstRect = {0, 0, 0, 0};
-    SDL_Texture *texture = nullptr;
     float scaleFactor;
     float theta = 0;
 };

@@ -1,7 +1,8 @@
-#include "../include/Button.hpp"
+#include "Button.hpp"
 
-Button::Button(Vector2f pos, const EntityInfo& buttonImageInfo, const EntityInfo& buttonTextInfo, float scaleFactor)
-: currentPos(pos), imgTexture(buttonImageInfo.texture), textTexture(buttonTextInfo.texture) {
+Button::Button(Vector2f pos, const EntityInfo &buttonImageInfo, const EntityInfo &buttonTextInfo, float scaleFactor)
+    : currentPos(pos), imgTexture(buttonImageInfo.texture), textTexture(buttonTextInfo.texture)
+{
     this->imgSrcRect = {0, 0, buttonImageInfo.w, buttonImageInfo.h};
     this->textSrcRect = {0, 0, buttonTextInfo.w, buttonTextInfo.h};
 
@@ -11,7 +12,8 @@ Button::Button(Vector2f pos, const EntityInfo& buttonImageInfo, const EntityInfo
     hoveredPos = {idlePos.x, idlePos.y + 10};
 }
 
-void Button::setDstRect(SDL_Rect srcRect, SDL_FRect &dstRect, float scale) {
+void Button::setDstRect(SDL_Rect srcRect, SDL_FRect &dstRect, float scale)
+{
     dstRect.w = (float)srcRect.w * scale;
     dstRect.h = (float)srcRect.h * scale;
     currentPos = {currentPos.x - dstRect.w / 2, currentPos.y - dstRect.h / 2};
@@ -19,17 +21,20 @@ void Button::setDstRect(SDL_Rect srcRect, SDL_FRect &dstRect, float scale) {
     dstRect.y = currentPos.y;
 }
 
-void Button::animateHover(SDL_FPoint mousePos) {
+void Button::animateHover(SDL_FPoint mousePos)
+{
     currentPos = collide(mousePos) ? hoveredPos : idlePos;
     imgDstRect.y = currentPos.y;
 }
 
-void Button::setTextPos() {
+void Button::setTextPos()
+{
     textDstRect.x = currentPos.x + imgDstRect.w / 2;
     textDstRect.y = currentPos.y + imgDstRect.h / 2 - textDstRect.h / 2;
 }
 
-void Button::draw(SDL_Renderer *renderer) {
+void Button::draw(SDL_Renderer *renderer)
+{
     setTextPos();
     SDL_RenderCopyF(renderer, imgTexture, &imgSrcRect, &imgDstRect);
     SDL_RenderCopyF(renderer, textTexture, &textSrcRect, &textDstRect);
